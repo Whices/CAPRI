@@ -1,0 +1,336 @@
+diff --git a/app/Capri.cs b/app/Capri.cs
+index b6d99a5..f05e5f2 100644
+--- a/app/Capri.cs
++++ b/app/Capri.cs
+@@ -2905,6 +2905,7 @@ namespace CapriDesktop
+         private void Tick()
+         {
+             double now = clock.Elapsed.TotalSeconds;
++            LetGoIfButtonUp();
+             MoveExplorePointer(now);
+             int interval = FrameInterval(now);
+             if (frames.Interval != interval) frames.Interval = interval;
+@@ -4028,7 +4029,27 @@ namespace CapriDesktop
+             Location = anchor;
+         }
+ 
+-        protected override void OnMouseMove(MouseEventArgs e) { base.OnMouseMove(e); MovePointer(Cursor.Position); Stroke(Cursor.Position); }
++        protected override void OnMouseMove(MouseEventArgs e)
++        {
++            base.OnMouseMove(e);
++            // The button-up can go missing (window re-stacked, focus stolen, a game or remote session grabbing the mouse), and
++            // then she would follow the cursor forever. If the left button isn't physically down, she's let go right here.
++            if (LetGoIfButtonUp()) return;
++            MovePointer(Cursor.Position);
++            Stroke(Cursor.Position);
++        }
++
++        // True when she thought she was held but the left button is physically up, after letting go of her like a release.
++        // Smoke tests drive her by hand with no button down, so they skip this. The check reads only the button's current
++        // state (the top bit), so it doesn't disturb the click counter, which reads the same key's "tapped since" bit.
++        private bool LetGoIfButtonUp()
++        {
++            if (testing || !pressed) return false;
++            int left = SystemInformation.MouseButtonsSwapped ? 0x02 : 0x01;
++            if ((Native.GetAsyncKeyState(left) & 0x8000) != 0) return false;
++            Released(Cursor.Position, clock.Elapsed.TotalSeconds);
++            return true;
++        }
+ 
+         private void Stroke(Point cursor)
+         {
+@@ -7175,20 +7196,33 @@ namespace CapriDesktop
+             else if (random.NextDouble() < 0.02) Say(ClickLines[random.Next(ClickLines.Length)]);
+         }
+ 
++        // The click count on a small plate in her Mainframe's style: the same clipped corners, dark red edge and hot red corner
++        // strokes as her panels, over the same wine-to-black ground, with the number in her cyan. It follows her look colours.
+         private void CountLabel(Graphics graphics)
+         {
+             if (tally == null) return;
+             string text = tally.Clicks.ToString("N0");
++            SmoothingMode smoothing = graphics.SmoothingMode;
++            graphics.SmoothingMode = SmoothingMode.AntiAlias;
+             graphics.TextRenderingHint = System.Drawing.Text.TextRenderingHint.AntiAlias;
+             using (Font font = Neon.Type(11f, true))
+             using (StringFormat middle = new StringFormat { Alignment = StringAlignment.Center, LineAlignment = StringAlignment.Center })
+             {
+-                RectangleF box = new RectangleF(0, 4, Width, PaddingSize - 6);
+-                using (Brush shade = new SolidBrush(Color.FromArgb(200, 0, 0, 0)))
+-                    graphics.DrawString(text, font, shade, new RectangleF(box.X + 1, box.Y + 1, box.Width, box.Height), middle);
+-                using (Brush ink = new SolidBrush(Color.FromArgb(255, 0, 240, 255)))
+-                    graphics.DrawString(text, font, ink, box, middle);
+-            }
++                SizeF measured = graphics.MeasureString(text, font);
++                const int plateTall = 24;
++                int plateWide = Math.Max(52, (int)Math.Ceiling(measured.Width) + 26);
++                Rectangle plate = new Rectangle((Width - plateWide) / 2, 4 + (PaddingSize - 6 - plateTall) / 2, plateWide, plateTall);
++                using (GraphicsPath shape = Neon.Cut(plate, 7, 3, 7, 3))
++                using (LinearGradientBrush wine = new LinearGradientBrush(plate, Color.FromArgb(235, Neon.Glow), Color.FromArgb(235, Neon.Ground), LinearGradientMode.Vertical))
++                    graphics.FillPath(wine, shape);
++                GraphicsState state = graphics.Save();
++                graphics.TranslateTransform(plate.X, plate.Y);
++                Neon.Frame(graphics, plate.Size, 1f, 7f, 3f, 8f, 5f);
++                graphics.Restore(state);
++                using (Brush ink = new SolidBrush(Neon.Cyan))
++                    graphics.DrawString(text, font, ink, new RectangleF(plate.X, plate.Y, plate.Width, plate.Height), middle);
++            }
++            graphics.SmoothingMode = smoothing;
+         }
+         // A mouse button also counts when it went down and back up between two checks (the low bit), so a quick tap isn't missed.
+         internal static Func<int, bool> KeyHeld = delegate(int vk) { return (Native.GetAsyncKeyState(vk) & (ByMouse(vk) ? 0x8001 : 0x8000)) != 0; };
+@@ -8460,7 +8494,9 @@ namespace CapriDesktop
+         internal bool ExploreAway { get { return preferences.ExploreAway; } }
+         // The test walks every row, so it sees them all except for the one step that checks Settings as people first see it.
+         private bool simpleTest;
+-        internal bool AdvancedSettings { get { return (testing && !simpleTest) || preferences.AdvancedSettings; } }
++        // Capri Lite: the first page and Settings show only what her AI-free build can use. The smoke tests check the full layouts.
++        internal bool LiteSettings { get { return !testing; } }
++        internal bool AdvancedSettings { get { return (testing && !simpleTest) || (!LiteSettings && preferences.AdvancedSettings); } }
+         internal void ToggleAdvancedSettings() { preferences.AdvancedSettings = !preferences.AdvancedSettings; SavePreferences(); }
+         internal int ExploreAfter { get { return preferences.ExploreAfter > 0 ? preferences.ExploreAfter : 300; } }
+ 
+diff --git a/app/Mainframe.cs b/app/Mainframe.cs
+index 0b3adf6..6d04c90 100644
+--- a/app/Mainframe.cs
++++ b/app/Mainframe.cs
+@@ -283,7 +283,22 @@ namespace CapriDesktop
+         private readonly Dictionary<Control, int> built = new Dictionary<Control, int>();
+         private bool simple;
+         private Key advancedKey;
+-        private int PageNow { get { return simple ? SimpleTall : PageTall; } }
++        private int PageNow { get { return simple ? (Lite ? liteTall : SimpleTall) : PageTall; } }
++        // Capri Lite: her AI is switched off, so the first page and Settings keep only what still does something. It reuses
++        // Simple Settings' folding, with bands worked out from where each row was really built instead of typed in. It stays off
++        // in the smoke tests, which check the full layouts.
++        private bool Lite { get { return capri.LiteSettings; } }
++        // The first page's BRAIN and VOICE controls. They wait off to the right, so CAPRI's band moves up to the top.
++        private readonly HashSet<Control> liteGone = new HashSet<Control>();
++        // Settings controls Lite never shows, one by one: the buttons and notes in a band's own corner.
++        private readonly HashSet<Control> liteRetired = new HashSet<Control>();
++        private int[][] liteLeft = new int[0][], liteRight = new int[0][];
++        private int liteLift;
++        // Mods' page ends with its COLORS keys, 562 down; Lite gives it just that and a margin instead of the full page.
++        private const int LiteModsTall = 600;
++        private int liteTall = 700;
++        private int[][] LeftBands { get { return Lite ? liteLeft : FoldedLeft; } }
++        private int[][] RightBands { get { return Lite ? liteRight : FoldedRight; } }
+         // The same for Simple Settings, with its hidden rows taken out.
+         private const int SimpleTall = 1030;
+         private int wheel;
+@@ -596,6 +611,7 @@ namespace CapriDesktop
+             installNote = Caption("", 28, InstallAt + 2, Font, White);
+             installNote.Visible = false;
+             int v = VoiceHeight;
++            int capriFrom = Controls.Count;
+             Lower(Section("CAPRI >", 0, 184 + v));
+             // Shorter than a band's other keys and level with CAPRI, so its lit rim stays off the band's teal rule (Lachy, 4 Nov).
+             support = Lower(Make("Support", 268, 183 + v, 88, 18, delegate { capri.OpenSupport(); }));
+@@ -616,6 +632,12 @@ namespace CapriDesktop
+             quit.Accent = Hot;
+             updateNote = Lower(Caption("", 28, 288 + v, small, Faint));
+             for (int i = header; i < Controls.Count; i++) mainLeft.Add(new KeyValuePair<Control, int>(Controls[i], Controls[i].Left));
++            if (Lite)
++            {
++                // Everything between her title bar and CAPRI's band is her brain and voice setup, which Lite has no use for.
++                for (int i = header; i < capriFrom; i++) liteGone.Add(Controls[i]);
++                liteLift = 184 + v - 58;
++            }
+             int first = Controls.Count;
+             // Settings: a setting to a row, its name on the left in red and its value in a box on the right, as on Cyberpunk
+             // 2077's settings screen (Lachy, 30 Oct). A section's own buttons, like Layers, sit at the right of its band.
+@@ -641,7 +663,8 @@ namespace CapriDesktop
+             FillLanguages(Screen.FromRectangle(Bounds).WorkingArea);
+             // A label of its own, so the question still shows once a name is saved in the box.
+             Named("What should she call you?", 0, 110);
+-            Make("Get to know me", 236, 113, 120, 22, delegate { capri.GetToKnow(); }).AccessibleName = "Get to know me: she asks what to call you, your pronouns and what you're into, and keeps them in me.md";
++            Key liteKnow = Make("Get to know me", 236, 113, 120, 22, delegate { capri.GetToKnow(); });
++            liteKnow.AccessibleName = "Get to know me: she asks what to call you, your pronouns and what you're into, and keeps them in me.md";
+             nickname = Input(28, 141, 244, 22);
+             nickname.Cue = "Your name or a nickname";
+             nickname.Box.AccessibleName = "What should she call you?";
+@@ -826,7 +849,7 @@ namespace CapriDesktop
+             hologram = Switch("Hologram", c, 278, delegate { if (!syncing) capri.ToggleHologram(); });
+             hologram.AccessibleName = "Hologram. Clicks pass through her body, talk pill and bubble. Turn this off to give her clicks back";
+             int afterPats = Controls.Count;
+-            Section("WATCH >", c, 208);
++            Head liteWatch = Section("WATCH >", c, 208);
+             watch = Switch("Watch my screen", c, 232, delegate { if (!syncing) capri.ToggleWatch(); });
+             watch.AccessibleName = "Watch my screen. She comments now and then about the desktop. Game comments have their own Comments setting under GAMES";
+             Named("Screens", c, 260);
+@@ -892,8 +915,9 @@ namespace CapriDesktop
+             localAddress.Box.AccessibleName = "Local server address";
+             localAddress.Box.KeyDown += delegate(object sender, KeyEventArgs e) { if (e.KeyCode == Keys.Enter) { e.SuppressKeyPress = true; UseLocalAddress(); } };
+             Make("Save", 280 + c, 615, 76, 22, delegate { UseLocalAddress(); }, "Local server address");
+-            Section("HABITS >", c, 656);
+-            Make("Obsidian vault", 104 + c, 653, 112, 20, delegate { ShowMemoryVault(); }).AccessibleName = "Obsidian vault: keep her notes in your Obsidian vault";
++            Head liteHabits = Section("HABITS >", c, 656);
++            Key liteObsidian = Make("Obsidian vault", 104 + c, 653, 112, 20, delegate { ShowMemoryVault(); });
++            liteObsidian.AccessibleName = "Obsidian vault: keep her notes in your Obsidian vault";
+             memoriesKey = Make("Open her memories", 220 + c, 653, 136, 20, delegate { EditNotes(true); });
+             memoriesKey.AccessibleName = "Open her memories: edit memories.md here";
+             startup = Switch("Start with Windows", c, 680, delegate { if (!syncing) capri.ToggleStartup(); });
+@@ -1009,6 +1033,7 @@ namespace CapriDesktop
+                 // Clicking into anything else while a key is being picked keeps the old key, so typing in a box is never swallowed.
+                 control.Enter += delegate { if (capturing != 0 && control != confirmKeys && control != cancelKeys && control != clearKeys && control != PickedKey) CancelKeys(); };
+             }
++            if (Lite) BuildLite(liteWatch, liteHabits, liteKnow, liteObsidian);
+             BuildMods();
+             Controls.Add(topRim);
+             Controls.Add(bottomRim);
+@@ -1738,7 +1763,7 @@ namespace CapriDesktop
+             more.Text = on || modded ? "Back" : "Settings";
+             more.Invalidate();
+             Place();
+-            foreach (KeyValuePair<Control, int> entry in mainLeft) Reachable(entry.Key, !on);
++            foreach (KeyValuePair<Control, int> entry in mainLeft) Reachable(entry.Key, !on && !liteGone.Contains(entry.Key));
+             foreach (KeyValuePair<Control, int> entry in pageLeft) Reachable(entry.Key, on && !Folded(entry.Key));
+             Reachable(modsKey, !on);
+             if (Hidden(ActiveControl) || on && ActiveControl == modsKey) more.Focus();
+@@ -1757,7 +1782,7 @@ namespace CapriDesktop
+         // the right end of whichever page shows.
+         private void Place()
+         {
+-            foreach (KeyValuePair<Control, int> entry in mainLeft) entry.Key.Left = Scaled(entry.Value) + (paged || modded ? Far : 0);
++            foreach (KeyValuePair<Control, int> entry in mainLeft) entry.Key.Left = Scaled(entry.Value) + (paged || modded || liteGone.Contains(entry.Key) ? Far : 0);
+             foreach (KeyValuePair<Control, int> entry in pageLeft) entry.Key.Left = Scaled(entry.Value) + (paged && !Folded(entry.Key) ? 0 : Far);
+             foreach (KeyValuePair<Control, int> entry in modLeft) entry.Key.Left = Scaled(entry.Value) + (modded ? 0 : Far);
+             int edge = paged ? Column : 0;
+@@ -1767,11 +1792,79 @@ namespace CapriDesktop
+             close.Left = Scaled(330 + edge);
+         }
+ 
++        // Works out Lite's folded bands from where each row was built. A band is [first row's top, the top of the next row
++        // that stays), so what's under it moves up by exactly the rows that went, and the gaps stay the width they were.
++        private void BuildLite(Head watchHead, Head habitsHead, params Control[] retired)
++        {
++            const int Tail = 1000000;
++            try
++            {
++                // A switch or a slider sits 3 below the top of its row.
++                Func<Control, int> row = control => built[control] - 3;
++                liteLeft = new[]
++                {
++                    // Her voice's pitch, speed, robot and glitch.
++                    new[] { row(pitchSlider), row(sounds) },
++                    // Listen for Capri, Hearing, Call mode and Her voice in your mic: down to where MOVES' band starts, less the
++                    // 11 that keeps the usual gap under the row above.
++                    new[] { row(listenCapri), built[popTimes] - 11 },
++                    // The Talk, Mute mic and Type keys.
++                    new[] { built[talkKeys], built[hideKeys] },
++                    // The Push to talk and Gaming Mode keys.
++                    new[] { built[pushKeys], built[gameKeys] + Row },
++                    // GAMES' settings and all of CLIPS, which need her AI or her game watching. Play and Controls stay.
++                    new[] { row(comments), Tail }
++                };
++                liteRight = new[]
++                {
++                    // The check-in rows and the Edit check-in lines key.
++                    new[] { row(careToggles[0]), row(onTop) },
++                    new[] { row(frameSize), row(frameColours) },
++                    new[] { row(upsetChaos), row(hologram) },
++                    // WATCH and BRAIN, up to HABITS' own buttons.
++                    new[] { built[watchHead] - 3, built[habitsHead] - 3 },
++                    new[] { row(discord), row(cursor) },
++                    // Remember our chats and SECURITY, which are for her chats.
++                    new[] { row(remembering), row(powerSaver) },
++                    // Perch, Keep PC awake for jobs, and under Hide in full screen the rest of HABITS.
++                    new[] { row(perchFps), row(hideFullScreen) },
++                    new[] { row(playerFullScreen), Tail }
++                };
++            }
++            catch (KeyNotFoundException)
++            {
++                // A control wasn't built where this expected: fall back to Simple Settings as it was.
++                liteLeft = FoldedLeft;
++                liteRight = FoldedRight;
++                liteTall = SimpleTall;
++                return;
++            }
++            foreach (Control control in new Control[] { notesKey, personalityKey, layersKey, styleNote, memoriesKey }) liteRetired.Add(control);
++            foreach (Control control in retired) liteRetired.Add(control);
++            int bottom = 0;
++            foreach (KeyValuePair<Control, int> entry in pageLeft)
++            {
++                int top;
++                if (liteRetired.Contains(entry.Key) || entry.Key == advancedKey || !built.TryGetValue(entry.Key, out top)) continue;
++                bool gone = false;
++                int closed = 0;
++                foreach (int[] band in entry.Value >= Column ? liteRight : liteLeft)
++                {
++                    if (top >= band[0] && top < band[1]) gone = true;
++                    else if (top >= band[1]) closed += band[1] - band[0];
++                }
++                if (!gone) bottom = Math.Max(bottom, top - closed + entry.Key.Height);
++            }
++            liteTall = bottom + 28;
++        }
++
+         private bool Folded(Control control)
+         {
+             int top;
++            // Lite has one Settings view: Advanced Settings only brings back what its build can't use.
++            if (Lite && (control == advancedKey || liteRetired.Contains(control))) return true;
+             if (!simple || control == advancedKey || !built.TryGetValue(control, out top)) return false;
+-            foreach (int[] band in pageLeft.Exists(entry => entry.Key == control && entry.Value >= Column) ? FoldedRight : FoldedLeft)
++            foreach (int[] band in pageLeft.Exists(entry => entry.Key == control && entry.Value >= Column) ? RightBands : LeftBands)
+                 if (top >= band[0] && top < band[1]) return true;
+             return false;
+         }
+@@ -1784,7 +1877,7 @@ namespace CapriDesktop
+                 int top;
+                 if (!built.TryGetValue(entry.Key, out top) || Folded(entry.Key)) continue;
+                 int gone = 0;
+-                if (simple) foreach (int[] band in entry.Value >= Column ? FoldedRight : FoldedLeft) if (top >= band[1]) gone += band[1] - band[0];
++                if (simple) foreach (int[] band in entry.Value >= Column ? RightBands : LeftBands) if (top >= band[1]) gone += band[1] - band[0];
+                 bool lifts = underVoice.Exists(moved => moved.Key == entry.Key);
+                 entry.Key.Top = Scaled(top - gone - (lifts && !simple ? lifted : 0));
+             }
+@@ -1954,7 +2047,7 @@ namespace CapriDesktop
+         private int Fit()
+         {
+             int room = ShortScreen > 0 ? ShortScreen : (int)(Screen.FromControl(this).WorkingArea.Height / Unit());
+-            return Math.Max(4 * ScrollRow, Math.Min(Math.Min(MostView, PageNow), room));
++            return Math.Max(4 * ScrollRow, Math.Min(Math.Min(Lite ? int.MaxValue : MostView, PageNow), room));
+         }
+ 
+         protected override void OnMouseWheel(MouseEventArgs e)
+@@ -2524,6 +2617,7 @@ namespace CapriDesktop
+                 using (Brush lit = new SolidBrush(Cyan)) graphics.FillRectangle(lit, Width - 8 * s, at, 2 * s, thumb);
+                 return;
+             }
++            if (Lite) return;
+             int shift = (expanded ? SetupHeight : 0) + KeyRow;
+             int below = voiceFilled >= 0 ? InstallRow : 0;
+             if (expanded) Dots(graphics, s, 210, filled);
+@@ -2674,6 +2768,8 @@ namespace CapriDesktop
+             int fold = arrangedFold = Fold;
+             hearingFold = hearingActions.Length == 0 ? HearingFixRow : 0;
+             foreach (KeyValuePair<Control, int> entry in lower) entry.Key.Top = Scaled(entry.Value + shift + (entry.Value >= InstallAt ? below : 0) - (entry.Value > KeyAt ? fold : 0) - (entry.Value > HearingFixAt ? hearingFold : 0));
++            // Lite's first page is only CAPRI's band, moved up under her title bar.
++            if (Lite) foreach (KeyValuePair<Control, int> entry in lower) if (!liteGone.Contains(entry.Key)) entry.Key.Top = Scaled(entry.Value - liteLift);
+             installNote.Top = Scaled(InstallAt + 2 + shift - fold - hearingFold);
+             installNote.Visible = below > 0;
+             foreach (Label step in steps) step.Visible = setupShown;
+@@ -2684,7 +2780,7 @@ namespace CapriDesktop
+             updateNote.MaximumSize = new Size(Scaled(328), 0);
+             if (keysNote != null) keysNote.MaximumSize = new Size(Scaled(328), 0);
+             if (paged) pageView = Fit();
+-            ClientSize = new Size(Scaled(paged ? Wide + Column : Wide), Scaled(paged ? pageView : Tall + shift + below - fold - hearingFold));
++            ClientSize = new Size(Scaled(paged ? Wide + Column : Wide), Scaled(paged ? pageView : Lite ? (modded ? LiteModsTall : Tall - liteLift) : Tall + shift + below - fold - hearingFold));
+             ScrollPage(ShownScroll);
+             bool scrolls = paged && pageView < PageNow;
+             topRim.Visible = bottomRim.Visible = scrolls;
+diff --git a/app/MainframeMods.cs b/app/MainframeMods.cs
+index 4170e37..98c9657 100644
+--- a/app/MainframeMods.cs
++++ b/app/MainframeMods.cs
+@@ -122,7 +122,7 @@ namespace CapriDesktop
+             more.Text = on ? "Back" : "Settings";
+             more.Invalidate();
+             Place();
+-            foreach (KeyValuePair<Control, int> entry in mainLeft) Reachable(entry.Key, !on);
++            foreach (KeyValuePair<Control, int> entry in mainLeft) Reachable(entry.Key, !on && !liteGone.Contains(entry.Key));
+             foreach (KeyValuePair<Control, int> entry in modLeft) Reachable(entry.Key, on);
+             if (Hidden(ActiveControl)) more.Focus();
+             if (on) FillMods();

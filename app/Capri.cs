@@ -2905,6 +2905,7 @@ namespace CapriDesktop
         private void Tick()
         {
             double now = clock.Elapsed.TotalSeconds;
+            LetGoIfButtonUp();
             MoveExplorePointer(now);
             int interval = FrameInterval(now);
             if (frames.Interval != interval) frames.Interval = interval;
@@ -4028,7 +4029,27 @@ namespace CapriDesktop
             Location = anchor;
         }
 
-        protected override void OnMouseMove(MouseEventArgs e) { base.OnMouseMove(e); MovePointer(Cursor.Position); Stroke(Cursor.Position); }
+        protected override void OnMouseMove(MouseEventArgs e)
+        {
+            base.OnMouseMove(e);
+            // The button-up can go missing (window re-stacked, focus stolen, a game or remote session grabbing the mouse), and
+            // then she would follow the cursor forever. If the left button isn't physically down, she's let go right here.
+            if (LetGoIfButtonUp()) return;
+            MovePointer(Cursor.Position);
+            Stroke(Cursor.Position);
+        }
+
+        // True when she thought she was held but the left button is physically up, after letting go of her like a release.
+        // Smoke tests drive her by hand with no button down, so they skip this. The check reads only the button's current
+        // state (the top bit), so it doesn't disturb the click counter, which reads the same key's "tapped since" bit.
+        private bool LetGoIfButtonUp()
+        {
+            if (testing || !pressed) return false;
+            int left = SystemInformation.MouseButtonsSwapped ? 0x02 : 0x01;
+            if ((Native.GetAsyncKeyState(left) & 0x8000) != 0) return false;
+            Released(Cursor.Position, clock.Elapsed.TotalSeconds);
+            return true;
+        }
 
         private void Stroke(Point cursor)
         {
@@ -7175,20 +7196,33 @@ namespace CapriDesktop
             else if (random.NextDouble() < 0.02) Say(ClickLines[random.Next(ClickLines.Length)]);
         }
 
+        // The click count on a small plate in her Mainframe's style: the same clipped corners, dark red edge and hot red corner
+        // strokes as her panels, over the same wine-to-black ground, with the number in her cyan. It follows her look colours.
         private void CountLabel(Graphics graphics)
         {
             if (tally == null) return;
             string text = tally.Clicks.ToString("N0");
+            SmoothingMode smoothing = graphics.SmoothingMode;
+            graphics.SmoothingMode = SmoothingMode.AntiAlias;
             graphics.TextRenderingHint = System.Drawing.Text.TextRenderingHint.AntiAlias;
             using (Font font = Neon.Type(11f, true))
             using (StringFormat middle = new StringFormat { Alignment = StringAlignment.Center, LineAlignment = StringAlignment.Center })
             {
-                RectangleF box = new RectangleF(0, 4, Width, PaddingSize - 6);
-                using (Brush shade = new SolidBrush(Color.FromArgb(200, 0, 0, 0)))
-                    graphics.DrawString(text, font, shade, new RectangleF(box.X + 1, box.Y + 1, box.Width, box.Height), middle);
-                using (Brush ink = new SolidBrush(Color.FromArgb(255, 0, 240, 255)))
-                    graphics.DrawString(text, font, ink, box, middle);
+                SizeF measured = graphics.MeasureString(text, font);
+                const int plateTall = 24;
+                int plateWide = Math.Max(52, (int)Math.Ceiling(measured.Width) + 26);
+                Rectangle plate = new Rectangle((Width - plateWide) / 2, 4 + (PaddingSize - 6 - plateTall) / 2, plateWide, plateTall);
+                using (GraphicsPath shape = Neon.Cut(plate, 7, 3, 7, 3))
+                using (LinearGradientBrush wine = new LinearGradientBrush(plate, Color.FromArgb(235, Neon.Glow), Color.FromArgb(235, Neon.Ground), LinearGradientMode.Vertical))
+                    graphics.FillPath(wine, shape);
+                GraphicsState state = graphics.Save();
+                graphics.TranslateTransform(plate.X, plate.Y);
+                Neon.Frame(graphics, plate.Size, 1f, 7f, 3f, 8f, 5f);
+                graphics.Restore(state);
+                using (Brush ink = new SolidBrush(Neon.Cyan))
+                    graphics.DrawString(text, font, ink, new RectangleF(plate.X, plate.Y, plate.Width, plate.Height), middle);
             }
+            graphics.SmoothingMode = smoothing;
         }
         // A mouse button also counts when it went down and back up between two checks (the low bit), so a quick tap isn't missed.
         internal static Func<int, bool> KeyHeld = delegate(int vk) { return (Native.GetAsyncKeyState(vk) & (ByMouse(vk) ? 0x8001 : 0x8000)) != 0; };
@@ -8208,6 +8242,9 @@ namespace CapriDesktop
             throwsAt.RemoveAll(at => now - at > SulkWindow || at > now);
             throwsAt.Add(now);
             if (fast >= ThrowHard) Static(false, Cue.Hop);
+            // Capri Lite: she never sulks, so she never shies away from the cursor or refuses to be picked up. The smoke tests
+            // still check the sulk itself.
+            if (throwsAt.Count >= SulkThrows && !testing) { throwsAt.Clear(); return; }
             if (throwsAt.Count >= SulkThrows) { throwsAt.Clear(); Sulk(now); sulkLine = true; return; }
             string line = throwsAt.Count == 2 ? Lines.Pick(WarnLines) : fast >= ThrowHard ? Lines.Pick(ThrowLines) : null;
             if (line != null) Yelp("throws you", line, false);
@@ -8460,7 +8497,9 @@ namespace CapriDesktop
         internal bool ExploreAway { get { return preferences.ExploreAway; } }
         // The test walks every row, so it sees them all except for the one step that checks Settings as people first see it.
         private bool simpleTest;
-        internal bool AdvancedSettings { get { return (testing && !simpleTest) || preferences.AdvancedSettings; } }
+        // Capri Lite: the first page and Settings show only what her AI-free build can use. The smoke tests check the full layouts.
+        internal bool LiteSettings { get { return !testing; } }
+        internal bool AdvancedSettings { get { return (testing && !simpleTest) || (!LiteSettings && preferences.AdvancedSettings); } }
         internal void ToggleAdvancedSettings() { preferences.AdvancedSettings = !preferences.AdvancedSettings; SavePreferences(); }
         internal int ExploreAfter { get { return preferences.ExploreAfter > 0 ? preferences.ExploreAfter : 300; } }
 

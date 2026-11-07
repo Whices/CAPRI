@@ -122,7 +122,7 @@ namespace CapriDesktop
             more.Text = on ? "Back" : "Settings";
             more.Invalidate();
             Place();
-            foreach (KeyValuePair<Control, int> entry in mainLeft) Reachable(entry.Key, !on);
+            foreach (KeyValuePair<Control, int> entry in mainLeft) Reachable(entry.Key, !on && !liteGone.Contains(entry.Key));
             foreach (KeyValuePair<Control, int> entry in modLeft) Reachable(entry.Key, on);
             if (Hidden(ActiveControl)) more.Focus();
             if (on) FillMods();
