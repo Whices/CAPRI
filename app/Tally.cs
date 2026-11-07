@@ -7,10 +7,10 @@ namespace CapriDesktop
     internal sealed class Tally
     {
         internal const int Milestone = 100;
-        private static readonly int[] Buttons = { 0x01, 0x02, 0x04 };
+        private static readonly int[] Buttons = { 0x01, 0x02, 0x04, 0x05, 0x06 };
         private readonly string file;
         private readonly System.Windows.Forms.Timer watch = new System.Windows.Forms.Timer { Interval = 20 };
-        private readonly bool[] held = new bool[3];
+        private readonly bool[] held = new bool[256];
         private int unsaved;
         internal Action<long> Clicked;
 
@@ -28,7 +28,7 @@ namespace CapriDesktop
 
         internal void Start()
         {
-            foreach (int vk in Buttons) Native.GetAsyncKeyState(vk);
+            for (int vk = 1; vk < 255; vk++) Native.GetAsyncKeyState(vk);
             watch.Start();
         }
 
@@ -44,19 +44,30 @@ namespace CapriDesktop
             Save();
         }
 
+        private static bool Counted(int vk)
+        {
+            if (vk >= 0x01 && vk <= 0x06) return Array.IndexOf(Buttons, vk) >= 0;
+            return vk >= 0x08 && vk != 0x10 && vk != 0x11 && vk != 0x12 && vk < 0xFF;
+        }
+
         private void Check()
         {
-            for (int i = 0; i < Buttons.Length; i++)
+            bool counted = false;
+            for (int vk = 1; vk < 255; vk++)
             {
-                bool down = (Native.GetAsyncKeyState(Buttons[i]) & 0x8001) != 0;
-                bool pressed = down && !held[i];
-                held[i] = down;
+                if (!Counted(vk)) continue;
+                bool mouse = vk <= 0x06;
+                bool down = (Native.GetAsyncKeyState(vk) & (mouse ? 0x8001 : 0x8000)) != 0;
+                bool pressed = down && !held[vk];
+                held[vk] = down;
                 if (!pressed) continue;
                 Clicks++;
                 unsaved++;
-                if (unsaved >= 25) Save();
-                if (Clicked != null) Clicked(Clicks);
+                counted = true;
             }
+            if (!counted) return;
+            if (unsaved >= 25) Save();
+            if (Clicked != null) Clicked(Clicks);
         }
 
         private void Save()

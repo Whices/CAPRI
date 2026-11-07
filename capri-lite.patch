@@ -1,0 +1,223 @@
+diff --git a/app/Brain.cs b/app/Brain.cs
+index 8a0724c..54e29f7 100644
+--- a/app/Brain.cs
++++ b/app/Brain.cs
+@@ -4178,8 +4178,11 @@ namespace CapriDesktop
+ 
+         private static HttpWebRequest Open(string path, int timeout) { return Create(Ollama + path, timeout); }
+ 
++        private static readonly bool AiOff = true;
++
+         private static HttpWebRequest Create(string url, int timeout)
+         {
++            if (AiOff) throw new WebException("Her AI is switched off in this build.");
+             ServicePointManager.SecurityProtocol |= (SecurityProtocolType)3072;
+             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
+             if (request.RequestUri.IsLoopback) request.AllowAutoRedirect = false;
+diff --git a/app/Capri.cs b/app/Capri.cs
+index ab8e7e7..b6d99a5 100644
+--- a/app/Capri.cs
++++ b/app/Capri.cs
+@@ -2455,6 +2455,7 @@ namespace CapriDesktop
+             menu.Items.Add(title);
+             menu.Items.Add(new ToolStripSeparator());
+             menu.Items.Add(new ToolStripMenuItem("Open Capri Mainframe", null, delegate { mainframe.Restore(); }));
++            menu.Items.Add(new ToolStripMenuItem("Reset click counter", null, delegate { tally.Reset(); tray.Text = "Capri · 0 inputs"; }));
+             visibilityItem = new ToolStripMenuItem("Hide Capri", null, delegate { ToggleHidden(); });
+             menu.Items.Add(visibilityItem);
+             ToolStripMenuItem sizes = new ToolStripMenuItem("Size");
+@@ -2553,6 +2554,9 @@ namespace CapriDesktop
+             ModList.SkinChanged = Reskinned;
+             if (SkinFolder != null || ArtColors.Active) Clip.ReloadAll();
+             Shown += delegate { ModList.StartCode(Post); };
++            tally = new Tally(data);
++            tally.Clicked = Tallied;
++            if (!testing) Shown += delegate { tally.Start(); };
+             mainframe = new Mainframe(this, tray.Icon, Assembly.GetExecutingAssembly().GetName().Version.ToString(3));
+             PrepareHusk(data);
+             mainframe.VisibleChanged += delegate { mainframeOpen = mainframe.Visible && mainframe.WindowState != FormWindowState.Minimized; };
+@@ -2810,9 +2814,9 @@ namespace CapriDesktop
+             if (!testing) ThreadPool.QueueUserWorkItem(delegate { qwen.Tidy(); });
+             if (!testing && preferences.HdVoice && !qwen.Installed) SetUpHd();
+             if (!testing && voice.Key != null) ListVoices(voice.Key, false);
+-            if (!testing) talkKey = ByMouse(preferences.TalkVk) || Native.RegisterHotKey(Handle, TalkKeyId, preferences.TalkMods | 0x4000, preferences.TalkVk);
++            talkKey = false;
+             bool muteFree = !testing && (ByMouse(preferences.MuteVk) || (Native.RegisterHotKey(Handle, MuteKeyId, preferences.MuteMods | 0x4000, preferences.MuteVk) && Native.UnregisterHotKey(Handle, MuteKeyId)));
+-            if (!testing) typeKey = ByMouse(preferences.TypeVk) || Native.RegisterHotKey(Handle, TypeKeyId, preferences.TypeMods | 0x4000, preferences.TypeVk);
++            typeKey = false;
+             if (!testing) hideKey = ByMouse(preferences.HideVk) || Native.RegisterHotKey(Handle, HideKeyId, preferences.HideMods | 0x4000, preferences.HideVk);
+             if (!testing) quietKey = ByMouse(preferences.QuietVk) || Native.RegisterHotKey(Handle, QuietKeyId, preferences.QuietMods | 0x4000, preferences.QuietVk);
+             if (!testing) gameKey = ByMouse(preferences.GameVk) || Native.RegisterHotKey(Handle, GameKeyId, preferences.GameMods | 0x4000, preferences.GameVk);
+@@ -2889,6 +2893,7 @@ namespace CapriDesktop
+         protected override void OnFormClosing(FormClosingEventArgs e)
+         {
+             base.OnFormClosing(e);
++            if (tally != null) tally.Stop();
+             bool shutdown = e.CloseReason == CloseReason.WindowsShutDown;
+             // Something outside Capri closing her window, like a pop-up blocker, goes in errors.txt.
+             if (!quitting && !testing && !shutdown) Brain.Log("quit", -1, "Her window was closed from outside Capri (" + e.CloseReason + ").");
+@@ -4281,9 +4286,7 @@ namespace CapriDesktop
+                 }
+             }
+             if (message.Msg == 0x0312 && message.WParam.ToInt32() == DismountId) { StopRide(); return; }
+-            if (message.Msg == 0x0312 && message.WParam.ToInt32() == TalkKeyId) { if (hidden) SetHidden(false); ToggleChat(); return; }
+-            if (message.Msg == 0x0312 && message.WParam.ToInt32() == MuteKeyId) { ToggleMic(); return; }
+-            if (message.Msg == 0x0312 && message.WParam.ToInt32() == TypeKeyId) { if (hidden) SetHidden(false); OpenTyper(); return; }
++            if (message.Msg == 0x0312 && (message.WParam.ToInt32() == TalkKeyId || message.WParam.ToInt32() == MuteKeyId || message.WParam.ToInt32() == TypeKeyId)) return;
+             if (message.Msg == 0x0312 && message.WParam.ToInt32() == HideKeyId) { ToggleHidden(); return; }
+             if (message.Msg == 0x0312 && message.WParam.ToInt32() == QuietKeyId) { ToggleShush(); return; }
+             if (message.Msg == 0x0312 && message.WParam.ToInt32() == GameKeyId) { ToggleGaming(); return; }
+@@ -7161,6 +7164,32 @@ namespace CapriDesktop
+         // A bound mouse button is checked about 30 times a second, only while one of her keys is a mouse button.
+         private readonly System.Windows.Forms.Timer mouseKeys = new System.Windows.Forms.Timer { Interval = 30 };
+         private readonly bool[] mouseHeld = new bool[6];
++        private Tally tally;
++        private static readonly string[] ClickLines = { "Keep clicking, choom.", "Your mouse is crying.", "Another click, another eddie.", "Don't flatline on me.", "Is that all you got?", "That click was suspicious..." };
++
++        private void Tallied(long clicks)
++        {
++            tray.Text = "Capri · " + clicks.ToString("N0") + " inputs";
++            if (!Quiet(clock.Elapsed.TotalSeconds) || Asleep) return;
++            if (clicks % Tally.Milestone == 0) Say(clicks.ToString("N0") + " inputs, choom.");
++            else if (random.NextDouble() < 0.02) Say(ClickLines[random.Next(ClickLines.Length)]);
++        }
++
++        private void CountLabel(Graphics graphics)
++        {
++            if (tally == null) return;
++            string text = tally.Clicks.ToString("N0");
++            graphics.TextRenderingHint = System.Drawing.Text.TextRenderingHint.AntiAlias;
++            using (Font font = Neon.Type(11f, true))
++            using (StringFormat middle = new StringFormat { Alignment = StringAlignment.Center, LineAlignment = StringAlignment.Center })
++            {
++                RectangleF box = new RectangleF(0, 4, Width, PaddingSize - 6);
++                using (Brush shade = new SolidBrush(Color.FromArgb(200, 0, 0, 0)))
++                    graphics.DrawString(text, font, shade, new RectangleF(box.X + 1, box.Y + 1, box.Width, box.Height), middle);
++                using (Brush ink = new SolidBrush(Color.FromArgb(255, 0, 240, 255)))
++                    graphics.DrawString(text, font, ink, box, middle);
++            }
++        }
+         // A mouse button also counts when it went down and back up between two checks (the low bit), so a quick tap isn't missed.
+         internal static Func<int, bool> KeyHeld = delegate(int vk) { return (Native.GetAsyncKeyState(vk) & (ByMouse(vk) ? 0x8001 : 0x8000)) != 0; };
+ 
+@@ -14174,6 +14203,7 @@ namespace CapriDesktop
+             graphics.InterpolationMode = InterpolationMode.HighQualityBicubic;
+             graphics.PixelOffsetMode = PixelOffsetMode.HighQuality;
+             graphics.SmoothingMode = SmoothingMode.HighQuality;
++            CountLabel(graphics);
+             double now = clock.Elapsed.TotalSeconds;
+             bool settled = Calm, dozing = shown == perchSleep && preferences.Motion;
+             float breathe = settled ? Breath(now) : dozing ? Doze(now, preferences.Size) : 0;
+diff --git a/app/Mainframe.cs b/app/Mainframe.cs
+index 7b868ed..0b3adf6 100644
+--- a/app/Mainframe.cs
++++ b/app/Mainframe.cs
+@@ -48,7 +48,7 @@ namespace CapriDesktop
+         // The left column is the taller one, and CLIPS' note at its foot sets this, with Free voice in games showing.
+         private const int PageTall = 1812;
+         // Settings scrolls at this height rather than filling a tall screen (Lachy, 31 Oct).
+-        private const int MostView = 820;
++        private const int MostView = 560;
+         // Settings opens a second column to the right, so every setting shows at once.
+         private const int Column = 380;
+         private const int Far = 30000;
+diff --git a/app/Tally.cs b/app/Tally.cs
+new file mode 100644
+index 0000000..140eeaf
+--- /dev/null
++++ b/app/Tally.cs
+@@ -0,0 +1,81 @@
++using System;
++using System.IO;
++using System.Windows.Forms;
++
++namespace CapriDesktop
++{
++    internal sealed class Tally
++    {
++        internal const int Milestone = 100;
++        private static readonly int[] Buttons = { 0x01, 0x02, 0x04, 0x05, 0x06 };
++        private readonly string file;
++        private readonly System.Windows.Forms.Timer watch = new System.Windows.Forms.Timer { Interval = 20 };
++        private readonly bool[] held = new bool[256];
++        private int unsaved;
++        internal Action<long> Clicked;
++
++        internal long Clicks { get; private set; }
++
++        internal Tally(string folder)
++        {
++            file = Path.Combine(folder, "clicks.txt");
++            long saved;
++            try { if (File.Exists(file) && long.TryParse(File.ReadAllText(file).Trim(), out saved)) Clicks = saved; }
++            catch (IOException) { }
++            catch (UnauthorizedAccessException) { }
++            watch.Tick += delegate { Check(); };
++        }
++
++        internal void Start()
++        {
++            for (int vk = 1; vk < 255; vk++) Native.GetAsyncKeyState(vk);
++            watch.Start();
++        }
++
++        internal void Stop()
++        {
++            watch.Stop();
++            Save();
++        }
++
++        internal void Reset()
++        {
++            Clicks = 0;
++            Save();
++        }
++
++        private static bool Counted(int vk)
++        {
++            if (vk >= 0x01 && vk <= 0x06) return Array.IndexOf(Buttons, vk) >= 0;
++            return vk >= 0x08 && vk != 0x10 && vk != 0x11 && vk != 0x12 && vk < 0xFF;
++        }
++
++        private void Check()
++        {
++            bool counted = false;
++            for (int vk = 1; vk < 255; vk++)
++            {
++                if (!Counted(vk)) continue;
++                bool mouse = vk <= 0x06;
++                bool down = (Native.GetAsyncKeyState(vk) & (mouse ? 0x8001 : 0x8000)) != 0;
++                bool pressed = down && !held[vk];
++                held[vk] = down;
++                if (!pressed) continue;
++                Clicks++;
++                unsaved++;
++                counted = true;
++            }
++            if (!counted) return;
++            if (unsaved >= 25) Save();
++            if (Clicked != null) Clicked(Clicks);
++        }
++
++        private void Save()
++        {
++            unsaved = 0;
++            try { File.WriteAllText(file, Clicks.ToString()); }
++            catch (IOException) { }
++            catch (UnauthorizedAccessException) { }
++        }
++    }
++}
+diff --git a/ci/build-windows.ps1 b/ci/build-windows.ps1
+index dee8d1e..a80ca22 100644
+--- a/ci/build-windows.ps1
++++ b/ci/build-windows.ps1
+@@ -21,7 +21,7 @@ $resources += ('/resource:' + (Join-Path $root 'assets\cursor.png') + ',Capri.Cu
+ if (-not $Store) { $resources += ('/resource:' + (Join-Path $root 'assets\vbcable\VBCABLE_Driver_Pack45.zip') + ',Capri.VBCABLE.zip') }
+ $resources += Get-ChildItem -LiteralPath (Join-Path $root 'assets\sprites') -Filter *.png | ForEach-Object { '/resource:' + $_.FullName + ',Capri.Sprite.' + $_.Name }
+ $resources += Get-ChildItem -LiteralPath (Join-Path $root 'assets\voice') -Filter *.wav | ForEach-Object { '/resource:' + $_.FullName + ',Capri.Voice.' + $_.Name }
+-$sources = @('Capri', 'Asides', 'Bolts', 'Commentary', 'Lookout', 'Brain', 'PlanBrain', 'Talk', 'Mainframe', 'MainframeMods', 'MainframeModsWindow', 'MainframeSlide', 'Mods', 'ModDirectory', 'CodeMods', 'SoundsLike', 'SkinMods', 'SkillMods', 'ArtColors', 'MainframeTips', 'TipChecks', 'MediumChecks', 'FreeKeyChecks', 'Neon', 'Notice', 'Engine', 'Ledges', 'Voice', 'Ears', 'MicMix', 'CableSetup', 'Packaged', 'Dictation', 'HearingStatus', 'Agent', 'Hands', 'GameHud', 'Computer', 'Arrange', 'Mixer', 'Usage', 'Network', 'Play', 'VoicePack', 'Startup', 'Presence', 'Player', 'Ocr', 'GameEars', 'GameNotes', 'GameKeys', 'Frames', 'Reminders', 'GameSense', 'GameWatch', 'SelfKnow', 'Care', 'Clips', 'ClipSettings', 'ClipChecks', 'Minis', 'Chess', 'ChessBoard', 'Files', 'FileFinder', 'Websites', 'Ink', 'Clones', 'ChaosScreen', 'Icons', 'FollowUps', 'WatchAlong', 'CallMode', 'Husk', 'CallEars', 'CallPanel', 'Reactions', 'ToolChecks', 'ErrorChecks', 'SmokeRun', 'AssemblyInfo') | ForEach-Object { Join-Path $root ('app\' + $_ + '.cs') }
++$sources = @('Capri', 'Asides', 'Bolts', 'Commentary', 'Lookout', 'Brain', 'PlanBrain', 'Talk', 'Mainframe', 'MainframeMods', 'MainframeModsWindow', 'MainframeSlide', 'Mods', 'ModDirectory', 'CodeMods', 'SoundsLike', 'SkinMods', 'SkillMods', 'ArtColors', 'MainframeTips', 'TipChecks', 'MediumChecks', 'FreeKeyChecks', 'Neon', 'Notice', 'Engine', 'Ledges', 'Voice', 'Ears', 'MicMix', 'CableSetup', 'Packaged', 'Dictation', 'HearingStatus', 'Agent', 'Hands', 'GameHud', 'Computer', 'Arrange', 'Mixer', 'Usage', 'Tally', 'Network', 'Play', 'VoicePack', 'Startup', 'Presence', 'Player', 'Ocr', 'GameEars', 'GameNotes', 'GameKeys', 'Frames', 'Reminders', 'GameSense', 'GameWatch', 'SelfKnow', 'Care', 'Clips', 'ClipSettings', 'ClipChecks', 'Minis', 'Chess', 'ChessBoard', 'Files', 'FileFinder', 'Websites', 'Ink', 'Clones', 'ChaosScreen', 'Icons', 'FollowUps', 'WatchAlong', 'CallMode', 'Husk', 'CallEars', 'CallPanel', 'Reactions', 'ToolChecks', 'ErrorChecks', 'SmokeRun', 'AssemblyInfo') | ForEach-Object { Join-Path $root ('app\' + $_ + '.cs') }
+ & $compiler ($shared + $references + $resources + @('/unsafe+', ('/out:' + $app)) + $sources)
+ if ($LASTEXITCODE -ne 0) { throw 'Capri compilation failed.' }
+ if ($Store) { Write-Output "Built $app for the Microsoft Store"; return }

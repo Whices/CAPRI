@@ -4178,8 +4178,11 @@ namespace CapriDesktop
 
         private static HttpWebRequest Open(string path, int timeout) { return Create(Ollama + path, timeout); }
 
+        private static readonly bool AiOff = true;
+
         private static HttpWebRequest Create(string url, int timeout)
         {
+            if (AiOff) throw new WebException("Her AI is switched off in this build.");
             ServicePointManager.SecurityProtocol |= (SecurityProtocolType)3072;
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
             if (request.RequestUri.IsLoopback) request.AllowAutoRedirect = false;

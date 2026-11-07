@@ -48,7 +48,7 @@ namespace CapriDesktop
         // The left column is the taller one, and CLIPS' note at its foot sets this, with Free voice in games showing.
         private const int PageTall = 1812;
         // Settings scrolls at this height rather than filling a tall screen (Lachy, 31 Oct).
-        private const int MostView = 820;
+        private const int MostView = 560;
         // Settings opens a second column to the right, so every setting shows at once.
         private const int Column = 380;
         private const int Far = 30000;

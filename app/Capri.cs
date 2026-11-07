@@ -2455,6 +2455,7 @@ namespace CapriDesktop
             menu.Items.Add(title);
             menu.Items.Add(new ToolStripSeparator());
             menu.Items.Add(new ToolStripMenuItem("Open Capri Mainframe", null, delegate { mainframe.Restore(); }));
+            menu.Items.Add(new ToolStripMenuItem("Reset click counter", null, delegate { tally.Reset(); tray.Text = "Capri · 0 inputs"; }));
             visibilityItem = new ToolStripMenuItem("Hide Capri", null, delegate { ToggleHidden(); });
             menu.Items.Add(visibilityItem);
             ToolStripMenuItem sizes = new ToolStripMenuItem("Size");
@@ -2553,6 +2554,9 @@ namespace CapriDesktop
             ModList.SkinChanged = Reskinned;
             if (SkinFolder != null || ArtColors.Active) Clip.ReloadAll();
             Shown += delegate { ModList.StartCode(Post); };
+            tally = new Tally(data);
+            tally.Clicked = Tallied;
+            if (!testing) Shown += delegate { tally.Start(); };
             mainframe = new Mainframe(this, tray.Icon, Assembly.GetExecutingAssembly().GetName().Version.ToString(3));
             PrepareHusk(data);
             mainframe.VisibleChanged += delegate { mainframeOpen = mainframe.Visible && mainframe.WindowState != FormWindowState.Minimized; };
@@ -2810,9 +2814,9 @@ namespace CapriDesktop
             if (!testing) ThreadPool.QueueUserWorkItem(delegate { qwen.Tidy(); });
             if (!testing && preferences.HdVoice && !qwen.Installed) SetUpHd();
             if (!testing && voice.Key != null) ListVoices(voice.Key, false);
-            if (!testing) talkKey = ByMouse(preferences.TalkVk) || Native.RegisterHotKey(Handle, TalkKeyId, preferences.TalkMods | 0x4000, preferences.TalkVk);
+            talkKey = false;
             bool muteFree = !testing && (ByMouse(preferences.MuteVk) || (Native.RegisterHotKey(Handle, MuteKeyId, preferences.MuteMods | 0x4000, preferences.MuteVk) && Native.UnregisterHotKey(Handle, MuteKeyId)));
-            if (!testing) typeKey = ByMouse(preferences.TypeVk) || Native.RegisterHotKey(Handle, TypeKeyId, preferences.TypeMods | 0x4000, preferences.TypeVk);
+            typeKey = false;
             if (!testing) hideKey = ByMouse(preferences.HideVk) || Native.RegisterHotKey(Handle, HideKeyId, preferences.HideMods | 0x4000, preferences.HideVk);
             if (!testing) quietKey = ByMouse(preferences.QuietVk) || Native.RegisterHotKey(Handle, QuietKeyId, preferences.QuietMods | 0x4000, preferences.QuietVk);
             if (!testing) gameKey = ByMouse(preferences.GameVk) || Native.RegisterHotKey(Handle, GameKeyId, preferences.GameMods | 0x4000, preferences.GameVk);
@@ -2889,6 +2893,7 @@ namespace CapriDesktop
         protected override void OnFormClosing(FormClosingEventArgs e)
         {
             base.OnFormClosing(e);
+            if (tally != null) tally.Stop();
             bool shutdown = e.CloseReason == CloseReason.WindowsShutDown;
             // Something outside Capri closing her window, like a pop-up blocker, goes in errors.txt.
             if (!quitting && !testing && !shutdown) Brain.Log("quit", -1, "Her window was closed from outside Capri (" + e.CloseReason + ").");
@@ -4281,9 +4286,7 @@ namespace CapriDesktop
                 }
             }
             if (message.Msg == 0x0312 && message.WParam.ToInt32() == DismountId) { StopRide(); return; }
-            if (message.Msg == 0x0312 && message.WParam.ToInt32() == TalkKeyId) { if (hidden) SetHidden(false); ToggleChat(); return; }
-            if (message.Msg == 0x0312 && message.WParam.ToInt32() == MuteKeyId) { ToggleMic(); return; }
-            if (message.Msg == 0x0312 && message.WParam.ToInt32() == TypeKeyId) { if (hidden) SetHidden(false); OpenTyper(); return; }
+            if (message.Msg == 0x0312 && (message.WParam.ToInt32() == TalkKeyId || message.WParam.ToInt32() == MuteKeyId || message.WParam.ToInt32() == TypeKeyId)) return;
             if (message.Msg == 0x0312 && message.WParam.ToInt32() == HideKeyId) { ToggleHidden(); return; }
             if (message.Msg == 0x0312 && message.WParam.ToInt32() == QuietKeyId) { ToggleShush(); return; }
             if (message.Msg == 0x0312 && message.WParam.ToInt32() == GameKeyId) { ToggleGaming(); return; }
@@ -7161,6 +7164,32 @@ namespace CapriDesktop
         // A bound mouse button is checked about 30 times a second, only while one of her keys is a mouse button.
         private readonly System.Windows.Forms.Timer mouseKeys = new System.Windows.Forms.Timer { Interval = 30 };
         private readonly bool[] mouseHeld = new bool[6];
+        private Tally tally;
+        private static readonly string[] ClickLines = { "Keep clicking, choom.", "Your mouse is crying.", "Another click, another eddie.", "Don't flatline on me.", "Is that all you got?", "That click was suspicious..." };
+
+        private void Tallied(long clicks)
+        {
+            tray.Text = "Capri · " + clicks.ToString("N0") + " inputs";
+            if (!Quiet(clock.Elapsed.TotalSeconds) || Asleep) return;
+            if (clicks % Tally.Milestone == 0) Say(clicks.ToString("N0") + " inputs, choom.");
+            else if (random.NextDouble() < 0.02) Say(ClickLines[random.Next(ClickLines.Length)]);
+        }
+
+        private void CountLabel(Graphics graphics)
+        {
+            if (tally == null) return;
+            string text = tally.Clicks.ToString("N0");
+            graphics.TextRenderingHint = System.Drawing.Text.TextRenderingHint.AntiAlias;
+            using (Font font = Neon.Type(11f, true))
+            using (StringFormat middle = new StringFormat { Alignment = StringAlignment.Center, LineAlignment = StringAlignment.Center })
+            {
+                RectangleF box = new RectangleF(0, 4, Width, PaddingSize - 6);
+                using (Brush shade = new SolidBrush(Color.FromArgb(200, 0, 0, 0)))
+                    graphics.DrawString(text, font, shade, new RectangleF(box.X + 1, box.Y + 1, box.Width, box.Height), middle);
+                using (Brush ink = new SolidBrush(Color.FromArgb(255, 0, 240, 255)))
+                    graphics.DrawString(text, font, ink, box, middle);
+            }
+        }
         // A mouse button also counts when it went down and back up between two checks (the low bit), so a quick tap isn't missed.
         internal static Func<int, bool> KeyHeld = delegate(int vk) { return (Native.GetAsyncKeyState(vk) & (ByMouse(vk) ? 0x8001 : 0x8000)) != 0; };
 
@@ -14174,6 +14203,7 @@ namespace CapriDesktop
             graphics.InterpolationMode = InterpolationMode.HighQualityBicubic;
             graphics.PixelOffsetMode = PixelOffsetMode.HighQuality;
             graphics.SmoothingMode = SmoothingMode.HighQuality;
+            CountLabel(graphics);
             double now = clock.Elapsed.TotalSeconds;
             bool settled = Calm, dozing = shown == perchSleep && preferences.Motion;
             float breathe = settled ? Breath(now) : dozing ? Doze(now, preferences.Size) : 0;
