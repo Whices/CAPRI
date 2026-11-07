@@ -1,0 +1,9 @@
+2026-11-07 10:41:29 | ears | - | Saved mic gone is unavailable; using Windows default default-one.
+2026-11-07 10:41:29 | ears | - | WASAPI opened default-one [default-one]: 48000 Hz, 6 channels, 32-bit float -> 16000 Hz, 1 channel, 16-bit PCM.
+2026-11-07 10:41:29 | ears | - | Saved mic gone is unavailable; using Windows default default-two.
+2026-11-07 10:41:29 | ears | - | WASAPI opened default-two [default-two]: 48000 Hz, 6 channels, 32-bit float -> 16000 Hz, 1 channel, 16-bit PCM.
+2026-11-07 10:41:29 | ears | - | WASAPI opened picked [picked]: 48000 Hz, 6 channels, 32-bit float -> 16000 Hz, 1 channel, 16-bit PCM.
+2026-11-07 10:41:29 | ears | - | Her WASAPI mic stopped: WASAPI mic packet size failed (0x88890004). Windows can't find a mic. Plug one in, or pick one in Settings > System > Sound.
+2026-11-07 10:41:29 | ears | - | WASAPI couldn't open fake-blocked [fake-blocked]: WASAPI mic initialize failed (0x80070005). Windows is blocking the mic. Turn on Microphone access and Let desktop apps access your microphone in Settings > Privacy & security > Microphone.
+2026-11-07 10:41:29 | ears | - | WASAPI couldn't open fake-blocked [fake-blocked]: WASAPI mic initialize failed (0x8889000A). Can't open your mic: another app has it to itself. Close it, or untick exclusive mode in your mic's Sound settings.
+2026-11-07 10:41:29 | ears | - | Windows is blocking the mic. Turn on Microphone access and Let desktop apps access your microphone in Settings > Privacy & security > Microphone.

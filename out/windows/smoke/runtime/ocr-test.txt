@@ -1,0 +1,6 @@
+PASS OCR handles missing and disposed bitmaps, empty crops and expired timeouts; sharpening clips, upscales and boosts contrast without changing the frame
+PASS Windows OCR reads known words at scales 1 and 2 with boxes in original frame pixels and lines top to bottom
+PASS OCR recovers after short timeouts and immediate source disposal, keeps crop-local boxes and serializes concurrent recognition
+PASS OCR timing 1920x1080: median 154.3 ms (151.8-166.2 ms, 5 warm reads, scale 1, conversion included)
+PASS OCR timing 400x200: median 7.2 ms (7.0-7.8 ms, 5 warm reads, scale 1, conversion included)
+PASS OCR reads a 12 px monospace HUD, white with a dark shadow on noise, after sharpening at scale 4: 123.456 / 64.000 / -78.900 / Faci ng: north (Towards negative Z) (-179.9 / 12.3)

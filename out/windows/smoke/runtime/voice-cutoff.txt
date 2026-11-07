@@ -1,0 +1,43 @@
+2026-11-07 11:04:46 | mic mix | - | Her mic mix opened CABLE Input (VB-Audio Virtual Cable) at 48000 Hz, room for 2400 frames, periods of 480 frames, topped up to 960 frames.
+2026-11-07 11:04:46 | mic mix | - | Her mic mix hears Microphone (stand-in) at 48000 Hz in packets of 480 frames.
+2026-11-07 11:04:46 | voice interruption | - | explicit input answer=40 audio=48 detected=48 ignored=False played_ms=327 remaining_ms=0 stream_busy=False
+2026-11-07 11:04:46 | voice cut | - | 1.0 s left, stopped by BargeIn < SmokeAnswerVoice < Section
+2026-11-07 11:04:46 | mic delivery | - | answer=1 speakers=1.000 s cable=0.120 s
+2026-11-07 11:04:47 | voice delivery | 204 ms | answer=40 audio=48 current_answer=40 current_audio=49 text_current=True audio_current=False seconds=1.0 letters=26
+2026-11-07 11:04:47 | mic mix | - | Her mic mix opened CABLE Input (VB-Audio Virtual Cable) at 48000 Hz, room for 2400 frames, periods of 480 frames, topped up to 960 frames.
+2026-11-07 11:04:47 | mic mix | - | Her mic mix hears Microphone (stand-in) at 48000 Hz in packets of 480 frames.
+2026-11-07 11:04:47 | voice interruption | - | call talk-over answer=42 audio=51 detected=51 ignored=False played_ms=-1 remaining_ms=0 stream_busy=False
+2026-11-07 11:04:47 | voice cut | - | 1.0 s left, stopped by BargeIn < InvokeMethod < UnsafeInvokeInternal
+2026-11-07 11:04:47 | mic delivery | - | answer=2 speakers=1.000 s cable=0.120 s
+2026-11-07 11:04:47 | voice delivery | 329 ms | answer=42 audio=51 current_answer=42 current_audio=52 text_current=True audio_current=False seconds=1.0 letters=25
+2026-11-07 11:04:47 | voice delivery | 240 ms | answer=44 audio=54 current_answer=45 current_audio=55 text_current=False audio_current=False seconds=1.0 letters=20
+2026-11-07 11:04:47 | voice delivery | 234 ms | answer=45 audio=55 current_answer=45 current_audio=55 text_current=True audio_current=True seconds=1.0 letters=23
+2026-11-07 11:04:48 | voice delivery | 224 ms | answer=47 audio=57 current_answer=48 current_audio=58 text_current=False audio_current=False seconds=none letters=20
+2026-11-07 11:04:48 | voice delivery | 239 ms | answer=48 audio=58 current_answer=48 current_audio=58 text_current=True audio_current=True seconds=1.0 letters=23
+2026-11-07 11:04:48 | voice delivery | 63 ms | answer=50 audio=60 current_answer=51 current_audio=61 text_current=False audio_current=False seconds=1.0 letters=19
+2026-11-07 11:04:48 | voice delivery | 3 ms | answer=53 audio=63 current_answer=53 current_audio=63 text_current=True audio_current=True seconds=1.0 letters=21
+2026-11-07 11:04:48 | voice interruption | - | local chat talk-over answer=54 audio=64 detected=63 ignored=True played_ms=104 remaining_ms=0 stream_busy=False
+2026-11-07 11:04:48 | voice delivery | 6 ms | answer=54 audio=64 current_answer=54 current_audio=64 text_current=True audio_current=True seconds=1.0 letters=26
+2026-11-07 11:04:48 | voice delivery | 0 ms | answer=56 audio=66 current_answer=56 current_audio=66 text_current=True audio_current=True seconds=1.0 letters=21
+2026-11-07 11:04:48 | voice interruption | - | wake mic talk-over answer=57 audio=67 detected=66 ignored=True played_ms=65 remaining_ms=0 stream_busy=False
+2026-11-07 11:04:48 | voice delivery | 3 ms | answer=57 audio=67 current_answer=57 current_audio=67 text_current=True audio_current=True seconds=1.0 letters=26
+2026-11-07 11:04:48 | voice interruption | - | voice chat talk-over answer=58 audio=68 detected=68 ignored=True played_ms=57 remaining_ms=0 stream_busy=True
+2026-11-07 11:04:49 | voice delivery | 28 ms | answer=59 audio=69 current_answer=59 current_audio=69 text_current=True audio_current=True seconds=1.0 letters=23
+2026-11-07 11:04:51 | voice interruption | - | server interruption answer=61 audio=71 detected=71 ignored=False played_ms=30 remaining_ms=0 stream_busy=False
+2026-11-07 11:04:51 | voice delivery | 29 ms | answer=61 audio=71 current_answer=61 current_audio=72 text_current=True audio_current=False seconds=1.0 letters=29
+2026-11-07 11:04:51 | voice delivery | 1 ms | answer=62 audio=73 current_answer=62 current_audio=73 text_current=True audio_current=True seconds=1.0 letters=21
+2026-11-07 11:04:51 | mic mix | - | Her mic mix opened CABLE Input (VB-Audio Virtual Cable) at 48000 Hz, room for 2400 frames, periods of 480 frames, topped up to 960 frames.
+2026-11-07 11:04:51 | mic mix | - | Her mic mix hears Microphone (stand-in) at 48000 Hz in packets of 480 frames.
+2026-11-07 11:04:51 | voice cut | - | 1.0 s left, stopped by SmokeAnswerVoice < Section < RunSmokeSections
+2026-11-07 11:04:51 | mic delivery | - | answer=4 speakers=1.000 s cable=0.100 s
+2026-11-07 11:04:51 | mic delivery | - | answer=3 speakers=1.000 s cable=0.100 s
+2026-11-07 11:04:51 | voice interruption | - | voice off answer=62 audio=73 detected=73 ignored=False played_ms=106 remaining_ms=1455 stream_busy=True
+2026-11-07 11:04:51 | mic mix | - | Her mic mix opened CABLE Input (VB-Audio Virtual Cable) at 48000 Hz, room for 2400 frames, periods of 480 frames, topped up to 960 frames.
+2026-11-07 11:04:51 | voice cut | - | 0.9 s left, stopped by BargeIn < Silence < SmokeAnswerVoice
+2026-11-07 11:04:51 | mic mix | - | Her mic mix hears Microphone (stand-in) at 48000 Hz in packets of 480 frames.
+2026-11-07 11:04:51 | mic delivery | - | answer=5 speakers=1.000 s cable=0.100 s
+2026-11-07 11:04:51 | mic delivery | - | answer=6 speakers=1.000 s cable=0.100 s
+2026-11-07 11:04:51 | mic mix | - | Her mic mix opened CABLE Input (VB-Audio Virtual Cable) at 48000 Hz, room for 2400 frames, periods of 480 frames, topped up to 960 frames.
+2026-11-07 11:04:51 | mic mix | - | Her mic mix hears Microphone (stand-in) at 48000 Hz in packets of 480 frames.
+2026-11-07 11:04:51 | mic delivery | - | answer=8 speakers=1.000 s cable=0.100 s
+2026-11-07 11:04:51 | mic delivery | - | answer=7 speakers=1.000 s cable=0.100 s

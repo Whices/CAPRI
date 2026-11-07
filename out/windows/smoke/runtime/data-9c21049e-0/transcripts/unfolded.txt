@@ -1,0 +1,4 @@
+2026-11-07 11:04 Job: Hologram mode on. Clicks go through me. Turn it off from my tray icon, or say hologram off.
+2026-11-07 11:04 Job: Hologram mode off. You can click me again.
+2026-11-07 11:04 Job: Hologram mode on. Clicks go through me. Turn it off from my tray icon, or say hologram off.
+2026-11-07 11:04 Job: Hologram mode off. You can click me again.

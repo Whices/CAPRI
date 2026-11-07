@@ -1,0 +1,16 @@
+section	depth	inclusive_ms	own_ms	parent
+CheckOcr	0	4139.009	4139.009	
+HologramChecks	0	1348.981	1348.981	
+SmokeReportedLogic	0	66.049	66.049	
+SmokeComments	0	202.428	202.428	
+SmokeOpening	0	611.401	611.401	
+SmokeVoiceWaits	0	1911.689	1911.689	
+SmokeLineChanges	0	5965.153	5965.153	
+SmokeAdminKeys	0	346.413	346.413	
+SmokeAnswerVoice	0	4917.799	4917.799	
+SmokeVoiceLanguages	0	560.836	560.836	
+SmokeVault	0	202.108	202.108	
+SmokeSound	0	6932.934	6932.934	
+SmokeDeviceChoices	0	20672.425	20672.425	
+SmokeSlowDevices	0	1725.420	1725.420	
+SmokeDucking	0	1184.792	1184.792	

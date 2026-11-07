@@ -1,0 +1,15 @@
+CheckOcr
+HologramChecks
+SmokeReportedLogic
+SmokeComments
+SmokeOpening
+SmokeVoiceWaits
+SmokeLineChanges
+SmokeAdminKeys
+SmokeAnswerVoice
+SmokeVoiceLanguages
+SmokeVault
+SmokeSound
+SmokeDeviceChoices
+SmokeSlowDevices
+SmokeDucking

@@ -1,0 +1,13 @@
+2026-11-07 10:41:26 | Speakers | - | WASAPI opened, process 11384: 24000 Hz mono 16-bit PCM -> 48000 Hz / 2 channels / 32 bits; conversion 0x88000000; buffer 4800 frames. Waiting for audio.
+2026-11-07 10:41:26 | mic mix | - | Her mic mix hears Microphone (stand-in) at 48000 Hz in packets of 480 frames.
+2026-11-07 10:41:26 | mic mix | - | Her mic mix opened CABLE Input (VB-Audio Virtual Cable) at 48000 Hz, room for 2400 frames, periods of 480 frames, topped up to 960 frames.
+2026-11-07 10:41:26 | Speakers | - | WASAPI received its first 4800 samples at 24000 Hz; release flags 0 (audio).
+2026-11-07 10:41:26 | mic mix | - | Her mic mix hears Microphone (stand-in) at 48000 Hz in packets of 480 frames.
+2026-11-07 10:41:26 | Speakers | - | WASAPI started and drained 240 samples at 24000 Hz.
+2026-11-07 10:41:27 | mic delivery | - | answer=59 speakers=0.600 s cable=0.600 s
+2026-11-07 10:41:27 | mic mix | - | Her mic mix opened CABLE Input (VB-Audio Virtual Cable) at 48000 Hz, room for 2400 frames, periods of 480 frames, topped up to 960 frames.
+2026-11-07 10:41:27 | mic mix | - | Her mic mix hears Microphone (stand-in) at 48000 Hz in packets of 480 frames.
+2026-11-07 10:41:27 | Speakers | - | WASAPI opened, process 11384: 24000 Hz mono 16-bit PCM -> 48000 Hz / 2 channels / 32 bits; conversion 0x88000000; buffer 4800 frames. Waiting for audio.
+2026-11-07 10:41:27 | Speakers | - | WASAPI received its first 4800 samples at 24000 Hz; release flags 0 (audio).
+2026-11-07 10:41:27 | Speakers | - | WASAPI started and drained 240 samples at 24000 Hz.
+2026-11-07 10:41:28 | mic delivery | - | answer=60 speakers=0.600 s cable=0.600 s

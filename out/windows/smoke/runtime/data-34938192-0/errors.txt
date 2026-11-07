@@ -1,0 +1,59 @@
+2026-11-07 10:40:46 | voice interruption | - | explicit input answer=1 audio=1 detected=1 ignored=False played_ms=-1 remaining_ms=0 stream_busy=False
+2026-11-07 10:40:46 | voice interruption | - | explicit input answer=3 audio=4 detected=4 ignored=False played_ms=-1 remaining_ms=0 stream_busy=False
+2026-11-07 10:40:46 | voice interruption | - | explicit input answer=5 audio=7 detected=7 ignored=False played_ms=-1 remaining_ms=0 stream_busy=False
+2026-11-07 10:40:46 | voice interruption | - | explicit input answer=7 audio=10 detected=10 ignored=False played_ms=-1 remaining_ms=0 stream_busy=False
+2026-11-07 10:40:49 | voice delivery | 1822 ms | answer=19 audio=23 current_answer=19 current_audio=23 text_current=True audio_current=True seconds=0.5 letters=12
+2026-11-07 10:40:51 | voice delivery | 20 ms | answer=23 audio=27 current_answer=23 current_audio=27 text_current=True audio_current=True seconds=1.0 letters=19
+2026-11-07 10:40:53 | voice delivery | 11 ms | answer=26 audio=30 current_answer=26 current_audio=30 text_current=True audio_current=True seconds=1.0 letters=16
+2026-11-07 10:40:53 | voice interruption | - | explicit input answer=26 audio=30 detected=30 ignored=False played_ms=26 remaining_ms=1572 stream_busy=False
+2026-11-07 10:40:53 | voice cut | - | 1.0 s left, stopped by BargeIn < SmokeLineChanges < Section
+2026-11-07 10:40:54 | voice cut | - | 1.0 s left, stopped by SmokeLineChanges < Section < RunSmokeSections
+2026-11-07 10:40:54 | voice interruption | - | voice off answer=29 audio=34 detected=34 ignored=False played_ms=1495 remaining_ms=0 stream_busy=False
+2026-11-07 10:40:54 | voice cut | - | 1.0 s left, stopped by BargeIn < Silence < SmokeLineChanges
+2026-11-07 10:40:55 | voice interruption | - | voice off answer=31 audio=37 detected=37 ignored=False played_ms=-1 remaining_ms=0 stream_busy=False
+2026-11-07 10:40:55 | voice cut | - | 1.0 s left, stopped by BargeIn < Silence < SmokeLineChanges
+2026-11-07 10:40:55 | voice cut | - | 1.0 s left, stopped by SmokeLineChanges < Section < RunSmokeSections
+2026-11-07 10:40:55 | voice interruption | - | voice off answer=32 audio=39 detected=39 ignored=False played_ms=11 remaining_ms=1568 stream_busy=True
+2026-11-07 10:40:55 | voice cut | - | 1.0 s left, stopped by BargeIn < Silence < SmokeLineChanges
+2026-11-07 10:40:55 | voice delivery | 484 ms | answer=30 audio=36 current_answer=35 current_audio=43 text_current=False audio_current=False seconds=1.0 letters=11
+2026-11-07 10:40:55 | voice delivery | 2 ms | answer=35 audio=43 current_answer=35 current_audio=43 text_current=True audio_current=True seconds=1.0 letters=157
+2026-11-07 10:40:55 | voice delivery | 0 ms | answer=37 audio=45 current_answer=37 current_audio=45 text_current=True audio_current=True seconds=1.0 letters=157
+2026-11-07 10:41:00 | voice delivery | 6 ms | answer=65 audio=77 current_answer=65 current_audio=77 text_current=True audio_current=True seconds=none letters=9
+2026-11-07 10:41:00 | voice delivery | 2 ms | answer=66 audio=78 current_answer=66 current_audio=78 text_current=True audio_current=True seconds=none letters=13
+2026-11-07 10:41:00 | voice delivery | 3 ms | answer=67 audio=79 current_answer=67 current_audio=79 text_current=True audio_current=True seconds=none letters=5
+2026-11-07 10:41:07 | Speakers | - | WASAPI opened, process 11384: 24000 Hz mono 16-bit PCM -> 48000 Hz / 2 channels / 32 bits; conversion 0x88000000; buffer 4800 frames. Waiting for audio.
+2026-11-07 10:41:07 | Speakers | - | WASAPI opened, process 11384: 24000 Hz mono 16-bit PCM -> 48000 Hz / 2 channels / 32 bits; conversion 0x88000000; buffer 4800 frames. Waiting for audio.
+2026-11-07 10:41:07 | Speakers | - | WASAPI received its first 2400 samples at 24000 Hz; release flags 0 (audio).
+2026-11-07 10:41:07 | Speakers | - | WASAPI received its first 2400 samples at 24000 Hz; release flags 0 (audio).
+2026-11-07 10:41:07 | Speakers | - | WASAPI started and drained 240 samples at 24000 Hz.
+2026-11-07 10:41:07 | Speakers | - | WASAPI started and drained 240 samples at 24000 Hz.
+2026-11-07 10:41:08 | Speakers | - | WASAPI opened, process 11384: 16000 Hz mono 16-bit PCM -> 48000 Hz / 2 channels / 32 bits; conversion 0x88000000; buffer 3200 frames. Waiting for audio.
+2026-11-07 10:41:08 | Speakers | - | WASAPI opened, process 11384: 24000 Hz mono 16-bit PCM -> 48000 Hz / 2 channels / 32 bits; conversion 0x88000000; buffer 4800 frames. Waiting for audio.
+2026-11-07 10:41:08 | Speakers | - | WASAPI opened, process 11384: 24000 Hz mono 16-bit PCM -> 48000 Hz / 2 channels / 32 bits; conversion 0x88000000; buffer 4800 frames. Waiting for audio.
+2026-11-07 10:41:08 | Speakers | - | WASAPI opened, process 11384: 24000 Hz mono 16-bit PCM -> 48000 Hz / 2 channels / 32 bits; conversion 0x88000000; buffer 4800 frames. Waiting for audio.
+2026-11-07 10:41:08 | Speakers | - | WASAPI opened, process 11384: 24000 Hz mono 16-bit PCM -> 48000 Hz / 2 channels / 32 bits; conversion 0x88000000; buffer 4800 frames. Waiting for audio.
+2026-11-07 10:41:08 | Speakers | - | WASAPI opened, process 11384: 24000 Hz mono 16-bit PCM -> 48000 Hz / 2 channels / 32 bits; conversion 0x88000000; buffer 4800 frames. Waiting for audio.
+2026-11-07 10:41:08 | Speakers | - | WASAPI opened, process 11384: 24000 Hz mono 16-bit PCM -> 48000 Hz / 2 channels / 32 bits; conversion 0x88000000; buffer 4800 frames. Waiting for audio.
+2026-11-07 10:41:08 | Speakers | - | WASAPI opened, process 11384: 24000 Hz mono 16-bit PCM -> 48000 Hz / 2 channels / 32 bits; conversion 0x88000000; buffer 4800 frames. Waiting for audio.
+2026-11-07 10:41:08 | Speakers | - | WASAPI opened, process 11384: 24000 Hz mono 16-bit PCM -> 48000 Hz / 2 channels / 32 bits; conversion 0x88000000; buffer 4800 frames. Waiting for audio.
+2026-11-07 10:41:08 | Speakers | - | WASAPI opened, process 11384: 24000 Hz mono 16-bit PCM -> 48000 Hz / 2 channels / 32 bits; conversion 0x88000000; buffer 4800 frames. Waiting for audio.
+2026-11-07 10:41:08 | Speakers | - | WASAPI opened, process 11384: 24000 Hz mono 16-bit PCM -> 48000 Hz / 2 channels / 32 bits; conversion 0x88000000; buffer 4800 frames. Waiting for audio.
+2026-11-07 10:41:08 | Speakers | - | WASAPI opened, process 11384: 24000 Hz mono 16-bit PCM -> 48000 Hz / 2 channels / 32 bits; conversion 0x88000000; buffer 4800 frames. Waiting for audio.
+2026-11-07 10:41:08 | Speakers | - | WASAPI opened, process 11384: 24000 Hz mono 16-bit PCM -> 48000 Hz / 2 channels / 32 bits; conversion 0x88000000; buffer 4800 frames. Waiting for audio.
+2026-11-07 10:41:08 | Speakers | - | WASAPI padding failed (0x88890004). 24000 Hz; submitted 0, drained 0 samples. Next line reopens the speakers.
+2026-11-07 10:41:08 | Speakers | - | WASAPI received its first 2400 samples at 24000 Hz; release flags 0 (audio).
+2026-11-07 10:41:08 | Speakers | - | Windows' wave API wouldn't open the speakers (error 6) and nor would WASAPI: The fake output is gone.
+2026-11-07 10:41:08 | Speakers | - | WASAPI started and drained 240 samples at 24000 Hz.
+2026-11-07 10:41:08 | Speakers | - | WASAPI opened, process 11384: 24000 Hz mono 16-bit PCM -> 48000 Hz / 2 channels / 32 bits; conversion 0x88000000; buffer 4800 frames. Waiting for audio.
+2026-11-07 10:41:08 | Speakers | - | WASAPI received its first 2400 samples at 24000 Hz; release flags 0 (audio).
+2026-11-07 10:41:08 | Speakers | - | WASAPI opened, process 11384: 24000 Hz mono 16-bit PCM -> 48000 Hz / 2 channels / 32 bits; conversion 0x88000000; buffer 4800 frames. Waiting for audio.
+2026-11-07 10:41:08 | Speakers | - | WASAPI started and drained 240 samples at 24000 Hz.
+2026-11-07 10:41:08 | Speakers | - | WASAPI opened, process 11384: 24000 Hz mono 16-bit PCM -> 48000 Hz / 2 channels / 32 bits; conversion 0x88000000; buffer 4800 frames. Waiting for audio.
+2026-11-07 10:41:08 | Speakers | - | WASAPI opened, process 11384: 24000 Hz mono 16-bit PCM -> 48000 Hz / 2 channels / 32 bits; conversion 0x88000000; buffer 4800 frames. Waiting for audio.
+2026-11-07 10:41:25 | mic mix | - | Her mic mix opened CABLE Input (VB-Audio Virtual Cable) at 48000 Hz, room for 2400 frames, periods of 480 frames, topped up to 960 frames.
+2026-11-07 10:41:25 | mic mix | - | Her mic mix hears Microphone (stand-in) at 48000 Hz in packets of 480 frames.
+2026-11-07 10:41:29 | ears | - | Mic test: peak RMS -54.2 dBFS. Your mic is very quiet. Raise its input volume in Windows sound settings.
+2026-11-07 10:41:29 | ears | - | Mic test: peak RMS silence. I can't hear anything from your mic. Pick the right one under VOICE, or let desktop apps use your mic in Windows Settings > Privacy & security > Microphone.
+2026-11-07 10:41:29 | ears | - | Mic test: peak RMS silence. Your mic is muted in Windows. Unmute it in Windows sound settings, then test again.
+2026-11-07 10:41:29 | ears | - | Windows default mic changed from first-fake-default to second-fake-default; reopening Windows speech.
+2026-11-07 10:41:31 | ears | - | Windows default mic changed from default to usb; reopening Windows speech.

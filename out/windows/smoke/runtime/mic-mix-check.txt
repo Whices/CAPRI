@@ -1,0 +1,142 @@
+2026-11-07 11:05:23 | mic mix | - | Her mic mix opened CABLE Input (VB-Audio Virtual Cable) at 48000 Hz, room for 2400 frames, periods of 480 frames, topped up to 960 frames.
+2026-11-07 11:05:23 | mic mix | - | Her mic mix hears Microphone (stand-in) at 48000 Hz in packets of 480 frames.
+2026-11-07 11:05:24 | mic mix | - | Her mic mix opened CABLE Input (VB-Audio Virtual Cable) at 48000 Hz, room for 2400 frames, periods of 480 frames, topped up to 960 frames.
+2026-11-07 11:05:24 | mic mix | - | Her mic mix hears Microphone (stand-in) at 44100 Hz in packets of 441 frames.
+2026-11-07 11:05:24 | mic mix | - | Her mic mix opened CABLE Input (VB-Audio Virtual Cable) at 48000 Hz, room for 2400 frames, periods of 480 frames, topped up to 960 frames.
+2026-11-07 11:05:24 | mic mix | - | Her mic mix hears Microphone (stand-in) at 16000 Hz in packets of 160 frames.
+2026-11-07 11:05:24 | mic mix | - | Her mic mix opened CABLE Input (VB-Audio Virtual Cable) at 44100 Hz, room for 2205 frames, periods of 441 frames, topped up to 882 frames.
+2026-11-07 11:05:24 | mic mix | - | Her mic mix hears Microphone (stand-in) at 48000 Hz in packets of 480 frames.
+2026-11-07 11:05:25 | mic mix | - | Her mic mix opened CABLE Input (VB-Audio Virtual Cable) at 44100 Hz, room for 2205 frames, periods of 441 frames, topped up to 882 frames.
+2026-11-07 11:05:25 | mic mix | - | Her mic mix hears Microphone (stand-in) at 44100 Hz in packets of 441 frames.
+2026-11-07 11:05:25 | mic mix | - | Her mic mix opened CABLE Input (VB-Audio Virtual Cable) at 44100 Hz, room for 2205 frames, periods of 441 frames, topped up to 882 frames.
+2026-11-07 11:05:25 | mic mix | - | Her mic mix hears Microphone (stand-in) at 16000 Hz in packets of 160 frames.
+2026-11-07 11:05:25 | mic mix | - | Her mic mix opened CABLE Input (VB-Audio Virtual Cable) at 16000 Hz, room for 800 frames, periods of 160 frames, topped up to 320 frames.
+2026-11-07 11:05:25 | mic mix | - | Her mic mix hears Microphone (stand-in) at 48000 Hz in packets of 480 frames.
+2026-11-07 11:05:25 | mic mix | - | Her mic mix opened CABLE Input (VB-Audio Virtual Cable) at 16000 Hz, room for 800 frames, periods of 160 frames, topped up to 320 frames.
+2026-11-07 11:05:25 | mic mix | - | Her mic mix hears Microphone (stand-in) at 44100 Hz in packets of 441 frames.
+2026-11-07 11:05:25 | mic mix | - | Her mic mix opened CABLE Input (VB-Audio Virtual Cable) at 16000 Hz, room for 800 frames, periods of 160 frames, topped up to 320 frames.
+2026-11-07 11:05:25 | mic mix | - | Her mic mix hears Microphone (stand-in) at 16000 Hz in packets of 160 frames.
+2026-11-07 11:05:25 | mic mix | - | Her mic mix opened CABLE Input (VB-Audio Virtual Cable) at 16000 Hz, room for 800 frames, periods of 160 frames, topped up to 320 frames.
+2026-11-07 11:05:25 | mic mix | - | Her mic mix hears Microphone (stand-in) at 48000 Hz in packets of 480 frames.
+2026-11-07 11:05:25 | mic mix | - | Her mic mix opened CABLE Input (VB-Audio Virtual Cable) at 48000 Hz, room for 2400 frames, periods of 480 frames, topped up to 960 frames.
+2026-11-07 11:05:25 | mic mix | - | Her mic mix hears Microphone (stand-in) at 16000 Hz in packets of 160 frames.
+2026-11-07 11:05:25 | mic mix | - | Her mic mix opened CABLE Input (VB-Audio Virtual Cable) at 48000 Hz, room for 2400 frames, periods of 480 frames, topped up to 960 frames.
+2026-11-07 11:05:25 | mic mix | - | Her mic mix hears Microphone (stand-in) at 48000 Hz in packets of 480 frames.
+2026-11-07 11:05:25 | mic mix | - | Her mic mix opened CABLE Input (VB-Audio Virtual Cable) at 48000 Hz, room for 2400 frames, periods of 480 frames, topped up to 960 frames.
+2026-11-07 11:05:25 | mic mix | - | Her mic mix hears Microphone (stand-in) at 48000 Hz in packets of 480 frames.
+2026-11-07 11:05:25 | mic mix | - | Her mic mix opened CABLE Input (VB-Audio Virtual Cable) at 48000 Hz, room for 2400 frames, periods of 480 frames, topped up to 960 frames.
+2026-11-07 11:05:25 | mic mix | - | Her mic mix hears Microphone (stand-in) at 48000 Hz in packets of 480 frames.
+2026-11-07 11:05:25 | mic mix | - | Her mic mix opened CABLE Input (VB-Audio Virtual Cable) at 48000 Hz, room for 2400 frames, periods of 480 frames, topped up to 960 frames.
+2026-11-07 11:05:25 | mic mix | - | Her mic mix hears Microphone (stand-in) at 48000 Hz in packets of 480 frames.
+2026-11-07 11:05:25 | mic mix | - | Her mic mix opened CABLE Input (VB-Audio Virtual Cable) at 44100 Hz, room for 2205 frames, periods of 441 frames, topped up to 882 frames.
+2026-11-07 11:05:25 | mic mix | - | Her mic mix hears Microphone (stand-in) at 48000 Hz in packets of 480 frames.
+2026-11-07 11:05:25 | mic mix | - | Her mic mix opened CABLE Input (VB-Audio Virtual Cable) at 44100 Hz, room for 2205 frames, periods of 441 frames, topped up to 882 frames.
+2026-11-07 11:05:25 | mic mix | - | Her mic mix hears Microphone (stand-in) at 48000 Hz in packets of 480 frames.
+2026-11-07 11:05:25 | mic mix | - | Her mic mix opened CABLE Input (VB-Audio Virtual Cable) at 44100 Hz, room for 2205 frames, periods of 441 frames, topped up to 882 frames.
+2026-11-07 11:05:25 | mic mix | - | Her mic mix hears Microphone (stand-in) at 48000 Hz in packets of 480 frames.
+2026-11-07 11:05:25 | mic mix | - | Her mic mix opened CABLE Input (VB-Audio Virtual Cable) at 16000 Hz, room for 800 frames, periods of 160 frames, topped up to 320 frames.
+2026-11-07 11:05:25 | mic mix | - | Her mic mix hears Microphone (stand-in) at 48000 Hz in packets of 480 frames.
+2026-11-07 11:05:25 | mic mix | - | Her mic mix opened CABLE Input (VB-Audio Virtual Cable) at 16000 Hz, room for 800 frames, periods of 160 frames, topped up to 320 frames.
+2026-11-07 11:05:25 | mic mix | - | Her mic mix hears Microphone (stand-in) at 48000 Hz in packets of 480 frames.
+2026-11-07 11:05:25 | mic mix | - | Her mic mix opened CABLE Input (VB-Audio Virtual Cable) at 16000 Hz, room for 800 frames, periods of 160 frames, topped up to 320 frames.
+2026-11-07 11:05:25 | mic mix | - | Her mic mix hears Microphone (stand-in) at 48000 Hz in packets of 480 frames.
+2026-11-07 11:05:25 | mic mix | - | Her mic mix opened CABLE Input (VB-Audio Virtual Cable) at 48000 Hz, room for 2400 frames, periods of 480 frames, topped up to 960 frames.
+2026-11-07 11:05:25 | mic mix | - | Her mic mix hears Microphone (stand-in) at 48000 Hz in packets of 480 frames.
+2026-11-07 11:05:26 | mic mix | - | Her mic mix opened CABLE Input (VB-Audio Virtual Cable) at 48000 Hz, room for 2400 frames, periods of 480 frames, topped up to 960 frames.
+2026-11-07 11:05:26 | mic mix | - | Her mic mix hears Microphone (stand-in) at 48000 Hz in packets of 480 frames.
+2026-11-07 11:05:26 | mic mix | - | Her mic mix opened CABLE Input (VB-Audio Virtual Cable) at 48000 Hz, room for 2400 frames, periods of 480 frames, topped up to 960 frames.
+2026-11-07 11:05:26 | mic mix | - | Her mic mix hears Microphone (stand-in) at 48000 Hz in packets of 480 frames.
+2026-11-07 11:05:26 | mic mix | - | Her mic mix opened CABLE Input (VB-Audio Virtual Cable) at 48000 Hz, room for 2400 frames, periods of 480 frames, topped up to 960 frames.
+2026-11-07 11:05:26 | mic mix | - | Her mic mix hears Microphone (stand-in) at 48000 Hz in packets of 480 frames.
+2026-11-07 11:05:26 | mic mix | - | Her mic mix opened CABLE Input (VB-Audio Virtual Cable) at 48000 Hz, room for 2400 frames, periods of 480 frames, topped up to 960 frames.
+2026-11-07 11:05:26 | mic mix | - | Her mic mix hears Microphone (stand-in) at 44100 Hz in packets of 441 frames.
+2026-11-07 11:05:27 | mic mix | - | Her mic mix opened CABLE Input (VB-Audio Virtual Cable) at 48000 Hz, room for 2400 frames, periods of 480 frames, topped up to 960 frames.
+2026-11-07 11:05:27 | mic mix | - | Her mic mix hears Microphone (stand-in) at 48000 Hz in packets of 480 frames.
+2026-11-07 11:05:27 | mic mix | - | Her mic mix lost the mic: Stand-in mic unplugged (0x88890004).
+2026-11-07 11:05:27 | mic mix | - | Her mic mix hears Microphone (stand-in) at 48000 Hz in packets of 480 frames.
+2026-11-07 11:05:27 | mic mix | - | Her mic mix lost its cable: Stand-in cable gone (0x88890004).
+2026-11-07 11:05:27 | mic mix | - | Her mic mix opened CABLE Input (VB-Audio Virtual Cable) at 48000 Hz, room for 2400 frames, periods of 480 frames, topped up to 960 frames.
+2026-11-07 11:05:27 | mic mix | - | Her mic mix hears Microphone (stand-in) at 48000 Hz in packets of 480 frames.
+2026-11-07 11:05:27 | mic mix | - | Her mic mix hears Headset Microphone (stand-in) at 48000 Hz in packets of 480 frames.
+2026-11-07 11:05:27 | mic mix | - | Her mic mix hears Microphone (stand-in) at 48000 Hz in packets of 480 frames.
+2026-11-07 11:05:27 | mic mix | - | Her mic mix lost its cable: CABLE Input (VB-Audio Virtual Cable) is gone.
+2026-11-07 11:05:27 | mic mix | - | Her mic mix opened CABLE Input (VB-Audio Virtual Cable) at 48000 Hz, room for 2400 frames, periods of 480 frames, topped up to 960 frames.
+2026-11-07 11:05:27 | mic mix | - | Her mic mix hears Microphone (stand-in) at 48000 Hz in packets of 480 frames.
+2026-11-07 11:05:27 | mic mix | - | Her mic mix opened CABLE Input (VB-Audio Virtual Cable) at 48000 Hz, room for 2400 frames, periods of 480 frames, topped up to 960 frames.
+2026-11-07 11:05:27 | mic mix | - | Her mic mix hears Microphone (stand-in) at 48000 Hz in packets of 480 frames.
+2026-11-07 11:05:27 | mic mix | - | CABLE Input (VB-Audio Virtual Cable) wouldn't open for her mic mix: Stand-in cable busy (0x88890008).
+2026-11-07 11:05:27 | mic delivery | - | answer=9 speakers=2.000 s cable=1.000 s
+2026-11-07 11:05:27 | mic mix | - | Her mic mix opened CABLE Input (VB-Audio Virtual Cable) at 48000 Hz, room for 2400 frames, periods of 480 frames, topped up to 960 frames.
+2026-11-07 11:05:27 | mic delivery | - | answer=10 speakers=1.400 s cable=1.400 s
+2026-11-07 11:05:27 | mic mix | - | Her mic mix hears Microphone (stand-in) at 48000 Hz in packets of 480 frames.
+2026-11-07 11:05:27 | mic delivery | - | answer=11 speakers=1.400 s cable=1.400 s
+2026-11-07 11:05:27 | mic mix | - | Her mic mix opened CABLE Input (VB-Audio Virtual Cable) at 48000 Hz, room for 2400 frames, periods of 480 frames, topped up to 960 frames.
+2026-11-07 11:05:27 | mic mix | - | Her mic mix hears Microphone (stand-in) at 48000 Hz in packets of 480 frames.
+2026-11-07 11:05:27 | mic delivery | - | answer=12 speakers=1.400 s cable=1.400 s
+2026-11-07 11:05:27 | mic mix | - | Her mic mix opened CABLE Input (VB-Audio Virtual Cable) at 48000 Hz, room for 2400 frames, periods of 480 frames, topped up to 960 frames.
+2026-11-07 11:05:27 | mic mix | - | Her mic mix hears Microphone (stand-in) at 48000 Hz in packets of 480 frames.
+2026-11-07 11:05:27 | mic mix | - | Her mic mix opened CABLE Input (VB-Audio Virtual Cable) at 48000 Hz, room for 2400 frames, periods of 480 frames, topped up to 960 frames.
+2026-11-07 11:05:27 | mic delivery | - | answer=13 speakers=2.800 s cable=2.800 s
+2026-11-07 11:05:27 | mic mix | - | Her mic mix hears Microphone (stand-in) at 48000 Hz in packets of 480 frames.
+2026-11-07 11:05:27 | mic delivery | - | answer=14 speakers=1.400 s cable=1.400 s
+2026-11-07 11:05:27 | mic mix | - | Her mic mix plays Speakers (Steam Streaming Microphone) 30 dB under, since Windows turns its far end up that much.
+2026-11-07 11:05:27 | mic mix | - | Her mic mix opened Speakers (Steam Streaming Microphone) at 48000 Hz, room for 2400 frames, periods of 480 frames, topped up to 960 frames.
+2026-11-07 11:05:27 | mic delivery | - | answer=15 speakers=1.400 s cable=1.400 s
+2026-11-07 11:05:27 | mic delivery | - | answer=16 speakers=1.400 s cable=1.400 s
+2026-11-07 11:05:27 | mic mix | - | Her mic mix hears Microphone (stand-in) at 48000 Hz in packets of 480 frames.
+2026-11-07 11:05:27 | mic delivery | - | answer=17 speakers=1.400 s cable=1.400 s
+2026-11-07 11:05:27 | mic mix | - | Her mic mix plays Speakers (Steam Streaming Microphone) 30 dB under, since Windows turns its far end up that much.
+2026-11-07 11:05:27 | mic mix | - | Her mic mix opened Speakers (Steam Streaming Microphone) at 48000 Hz, room for 2400 frames, periods of 480 frames, topped up to 960 frames.
+2026-11-07 11:05:27 | mic mix | - | Her mic mix hears Microphone (stand-in) at 48000 Hz in packets of 480 frames.
+2026-11-07 11:05:27 | mic delivery | - | answer=18 speakers=2.800 s cable=2.800 s
+2026-11-07 11:05:27 | mic delivery | - | answer=19 speakers=1.400 s cable=1.400 s
+2026-11-07 11:05:27 | mic mix | - | Her mic mix opened CABLE Input (VB-Audio Virtual Cable) at 44100 Hz, room for 2205 frames, periods of 441 frames, topped up to 882 frames.
+2026-11-07 11:05:27 | mic mix | - | Her mic mix hears Microphone (stand-in) at 48000 Hz in packets of 480 frames.
+2026-11-07 11:05:27 | mic delivery | - | answer=20 speakers=1.400 s cable=1.400 s
+2026-11-07 11:05:27 | mic delivery | - | answer=21 speakers=1.400 s cable=1.400 s
+2026-11-07 11:05:27 | mic delivery | - | answer=22 speakers=1.400 s cable=1.400 s
+2026-11-07 11:05:27 | mic mix | - | Her mic mix opened CABLE Input (VB-Audio Virtual Cable) at 44100 Hz, room for 2205 frames, periods of 441 frames, topped up to 882 frames.
+2026-11-07 11:05:27 | mic mix | - | Her mic mix hears Microphone (stand-in) at 48000 Hz in packets of 480 frames.
+2026-11-07 11:05:27 | mic delivery | - | answer=23 speakers=2.800 s cable=2.800 s
+2026-11-07 11:05:27 | mic delivery | - | answer=24 speakers=1.400 s cable=1.400 s
+2026-11-07 11:05:27 | mic mix | - | Her mic mix plays Speakers (Steam Streaming Microphone) 30 dB under, since Windows turns its far end up that much.
+2026-11-07 11:05:27 | mic mix | - | Her mic mix opened Speakers (Steam Streaming Microphone) at 44100 Hz, room for 2205 frames, periods of 441 frames, topped up to 882 frames.
+2026-11-07 11:05:27 | mic mix | - | Her mic mix hears Microphone (stand-in) at 48000 Hz in packets of 480 frames.
+2026-11-07 11:05:27 | mic delivery | - | answer=25 speakers=1.400 s cable=1.400 s
+2026-11-07 11:05:28 | mic delivery | - | answer=26 speakers=1.400 s cable=1.400 s
+2026-11-07 11:05:28 | mic delivery | - | answer=27 speakers=1.400 s cable=1.400 s
+2026-11-07 11:05:28 | mic mix | - | Her mic mix plays Speakers (Steam Streaming Microphone) 30 dB under, since Windows turns its far end up that much.
+2026-11-07 11:05:28 | mic mix | - | Her mic mix opened Speakers (Steam Streaming Microphone) at 44100 Hz, room for 2205 frames, periods of 441 frames, topped up to 882 frames.
+2026-11-07 11:05:28 | mic mix | - | Her mic mix hears Microphone (stand-in) at 48000 Hz in packets of 480 frames.
+2026-11-07 11:05:28 | mic delivery | - | answer=28 speakers=2.800 s cable=2.800 s
+2026-11-07 11:05:28 | mic delivery | - | answer=29 speakers=1.400 s cable=1.400 s
+2026-11-07 11:05:28 | mic mix | - | Her mic mix opened CABLE Input (VB-Audio Virtual Cable) at 16000 Hz, room for 800 frames, periods of 160 frames, topped up to 320 frames.
+2026-11-07 11:05:28 | mic mix | - | Her mic mix hears Microphone (stand-in) at 48000 Hz in packets of 480 frames.
+2026-11-07 11:05:28 | mic delivery | - | answer=30 speakers=1.400 s cable=1.400 s
+2026-11-07 11:05:28 | mic delivery | - | answer=31 speakers=1.400 s cable=1.400 s
+2026-11-07 11:05:28 | mic delivery | - | answer=32 speakers=1.400 s cable=1.400 s
+2026-11-07 11:05:28 | mic mix | - | Her mic mix opened CABLE Input (VB-Audio Virtual Cable) at 16000 Hz, room for 800 frames, periods of 160 frames, topped up to 320 frames.
+2026-11-07 11:05:28 | mic mix | - | Her mic mix hears Microphone (stand-in) at 48000 Hz in packets of 480 frames.
+2026-11-07 11:05:28 | mic delivery | - | answer=33 speakers=2.800 s cable=2.800 s
+2026-11-07 11:05:28 | mic delivery | - | answer=34 speakers=1.400 s cable=1.400 s
+2026-11-07 11:05:28 | mic mix | - | Her mic mix plays Speakers (Steam Streaming Microphone) 30 dB under, since Windows turns its far end up that much.
+2026-11-07 11:05:28 | mic mix | - | Her mic mix opened Speakers (Steam Streaming Microphone) at 16000 Hz, room for 800 frames, periods of 160 frames, topped up to 320 frames.
+2026-11-07 11:05:28 | mic delivery | - | answer=35 speakers=1.400 s cable=1.400 s
+2026-11-07 11:05:28 | mic mix | - | Her mic mix hears Microphone (stand-in) at 48000 Hz in packets of 480 frames.
+2026-11-07 11:05:28 | mic delivery | - | answer=36 speakers=1.400 s cable=1.400 s
+2026-11-07 11:05:28 | mic delivery | - | answer=37 speakers=1.400 s cable=1.400 s
+2026-11-07 11:05:28 | mic mix | - | Her mic mix plays Speakers (Steam Streaming Microphone) 30 dB under, since Windows turns its far end up that much.
+2026-11-07 11:05:28 | mic mix | - | Her mic mix opened Speakers (Steam Streaming Microphone) at 16000 Hz, room for 800 frames, periods of 160 frames, topped up to 320 frames.
+2026-11-07 11:05:28 | mic mix | - | Her mic mix hears Microphone (stand-in) at 48000 Hz in packets of 480 frames.
+2026-11-07 11:05:28 | mic delivery | - | answer=38 speakers=2.800 s cable=2.800 s
+2026-11-07 11:05:28 | mic delivery | - | answer=39 speakers=1.400 s cable=1.400 s
+2026-11-07 11:05:28 | mic mix | - | Her mic mix opened CABLE Input (VB-Audio Virtual Cable) at 48000 Hz, room for 2400 frames, periods of 480 frames, topped up to 960 frames.
+2026-11-07 11:05:28 | mic mix | - | Her mic mix hears Microphone (stand-in) at 48000 Hz in packets of 480 frames.
+2026-11-07 11:05:28 | mic mix | - | Her mic mix plays Speakers (Steam Streaming Microphone) 30 dB under, since Windows turns its far end up that much.
+2026-11-07 11:05:28 | mic mix | - | Her mic mix opened Speakers (Steam Streaming Microphone) at 48000 Hz, room for 2400 frames, periods of 480 frames, topped up to 960 frames.
+2026-11-07 11:05:28 | mic mix | - | Her mic mix hears Microphone (stand-in) at 48000 Hz in packets of 480 frames.
+2026-11-07 11:05:28 | mic mix | - | Her mic mix plays Speakers (Steam Streaming Microphone) 12 dB under, since Windows turns its far end up that much.
+2026-11-07 11:05:28 | mic mix | - | Her mic mix plays Speakers (Steam Streaming Microphone) 30 dB under, since Windows turns its far end up that much.
+2026-11-07 11:05:28 | mic mix | - | Her mic mix plays Speakers (Steam Streaming Microphone) 30 dB under, Steam's usual, since Windows won't say its far end's volume.
+2026-11-07 11:05:28 | mic mix | - | Her mic mix opened Speakers (Steam Streaming Microphone) at 48000 Hz, room for 2400 frames, periods of 480 frames, topped up to 960 frames.
+2026-11-07 11:05:28 | mic mix | - | Her mic mix hears Microphone (stand-in) at 48000 Hz in packets of 480 frames.

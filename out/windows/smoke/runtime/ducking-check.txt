@@ -1,0 +1,30 @@
+2026-11-07 10:41:19 | Speakers | - | WASAPI opened, process 11384: 16000 Hz mono 16-bit PCM -> 48000 Hz / 2 channels / 32 bits; conversion 0x88000000; buffer 3200 frames. Waiting for audio.
+2026-11-07 10:41:19 | Speakers | - | WASAPI received its first 1600 samples at 16000 Hz; release flags 0 (audio).
+2026-11-07 10:41:19 | Speakers | - | WASAPI started and drained 160 samples at 16000 Hz.
+2026-11-07 10:41:19 | Speakers | - | WASAPI opened, process 11384: 16000 Hz mono 16-bit PCM -> 48000 Hz / 2 channels / 32 bits; conversion 0x88000000; buffer 3200 frames. Waiting for audio.
+2026-11-07 10:41:19 | Speakers | - | WASAPI received its first 1600 samples at 16000 Hz; release flags 0 (audio).
+2026-11-07 10:41:19 | Speakers | - | WASAPI started and drained 160 samples at 16000 Hz.
+2026-11-07 10:41:20 | Speakers | - | WASAPI opened, process 11384: 16000 Hz mono 16-bit PCM -> 48000 Hz / 2 channels / 32 bits; conversion 0x88000000; buffer 3200 frames. Waiting for audio.
+2026-11-07 10:41:20 | Speakers | - | WASAPI received its first 1600 samples at 16000 Hz; release flags 0 (audio).
+2026-11-07 10:41:20 | Speakers | - | WASAPI started and drained 160 samples at 16000 Hz.
+2026-11-07 10:41:20 | Speakers | - | WASAPI opened, process 11384: 16000 Hz mono 16-bit PCM -> 48000 Hz / 2 channels / 32 bits; conversion 0x88000000; buffer 3200 frames. Waiting for audio.
+2026-11-07 10:41:20 | Speakers | - | WASAPI received its first 1600 samples at 16000 Hz; release flags 0 (audio).
+2026-11-07 10:41:20 | Speakers | - | WASAPI started and drained 160 samples at 16000 Hz.
+2026-11-07 10:41:20 | Speakers | - | WASAPI opened, process 11384: 16000 Hz mono 16-bit PCM -> 48000 Hz / 2 channels / 32 bits; conversion 0x88000000; buffer 3200 frames. Waiting for audio.
+2026-11-07 10:41:20 | Speakers | - | WASAPI received its first 1600 samples at 16000 Hz; release flags 0 (audio).
+2026-11-07 10:41:20 | Speakers | - | WASAPI started and drained 160 samples at 16000 Hz.
+2026-11-07 11:05:22 | Speakers | - | WASAPI opened, process 22792: 16000 Hz mono 16-bit PCM -> 48000 Hz / 2 channels / 32 bits; conversion 0x88000000; buffer 3200 frames. Waiting for audio.
+2026-11-07 11:05:22 | Speakers | - | WASAPI received its first 1600 samples at 16000 Hz; release flags 0 (audio).
+2026-11-07 11:05:22 | Speakers | - | WASAPI started and drained 160 samples at 16000 Hz.
+2026-11-07 11:05:22 | Speakers | - | WASAPI opened, process 22792: 16000 Hz mono 16-bit PCM -> 48000 Hz / 2 channels / 32 bits; conversion 0x88000000; buffer 3200 frames. Waiting for audio.
+2026-11-07 11:05:22 | Speakers | - | WASAPI received its first 1600 samples at 16000 Hz; release flags 0 (audio).
+2026-11-07 11:05:22 | Speakers | - | WASAPI started and drained 160 samples at 16000 Hz.
+2026-11-07 11:05:22 | Speakers | - | WASAPI opened, process 22792: 16000 Hz mono 16-bit PCM -> 48000 Hz / 2 channels / 32 bits; conversion 0x88000000; buffer 3200 frames. Waiting for audio.
+2026-11-07 11:05:22 | Speakers | - | WASAPI received its first 1600 samples at 16000 Hz; release flags 0 (audio).
+2026-11-07 11:05:22 | Speakers | - | WASAPI started and drained 160 samples at 16000 Hz.
+2026-11-07 11:05:23 | Speakers | - | WASAPI opened, process 22792: 16000 Hz mono 16-bit PCM -> 48000 Hz / 2 channels / 32 bits; conversion 0x88000000; buffer 3200 frames. Waiting for audio.
+2026-11-07 11:05:23 | Speakers | - | WASAPI received its first 1600 samples at 16000 Hz; release flags 0 (audio).
+2026-11-07 11:05:23 | Speakers | - | WASAPI started and drained 160 samples at 16000 Hz.
+2026-11-07 11:05:23 | Speakers | - | WASAPI opened, process 22792: 16000 Hz mono 16-bit PCM -> 48000 Hz / 2 channels / 32 bits; conversion 0x88000000; buffer 3200 frames. Waiting for audio.
+2026-11-07 11:05:23 | Speakers | - | WASAPI received its first 1600 samples at 16000 Hz; release flags 0 (audio).
+2026-11-07 11:05:23 | Speakers | - | WASAPI started and drained 160 samples at 16000 Hz.

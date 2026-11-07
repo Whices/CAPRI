@@ -1,0 +1,3 @@
+2026-11-07 10:41:25 | mic mix | - | Her mic mix opened CABLE Input (VB-Audio Virtual Cable) at 48000 Hz, room for 256 frames, periods of 128 frames, topped up to 256 frames.
+2026-11-07 10:41:25 | mic mix | - | Her mic mix hears Microphone (stand-in) at 48000 Hz in packets of 480 frames.
+2026-11-07 10:41:25 | mic delivery | - | answer=48 speakers=0.300 s cable=0.300 s

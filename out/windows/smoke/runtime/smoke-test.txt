@@ -1,0 +1,73 @@
+PASS OCR handles missing and disposed bitmaps, empty crops and expired timeouts; sharpening clips, upscales and boosts contrast without changing the frame
+PASS Windows OCR reads known words at scales 1 and 2 with boxes in original frame pixels and lines top to bottom
+PASS OCR recovers after short timeouts and immediate source disposal, keeps crop-local boxes and serializes concurrent recognition
+PASS OCR timing 1920x1080: median 154.3 ms (151.8-166.2 ms, 5 warm reads, scale 1, conversion included)
+PASS OCR timing 400x200: median 7.2 ms (7.0-7.8 ms, 5 warm reads, scale 1, conversion included)
+PASS OCR reads a 12 px monospace HUD, white with a dark shadow on noise, after sharpening at scale 4: 123.456 / 64.000 / -78.900 / Faci ng: north (Towards negative Z) (-179.9 / 12.3)
+PASS OCR runs on a worker; its synchronous calls return immediately on the UI thread (engine ready: True)
+PASS Hologram menu item toggles, shows its check and recovery hint, and saves in preferences
+PASS Hologram applies WS_EX_TRANSPARENT only to her body, pill and bubble, including newly created and recreated handles
+PASS Hologram renders existing frames at 60% opacity with a steady cyan tint under reduced motion; side-by-side preview saved
+PASS Hologram blocks dragging, riding, pending clicks and head pats
+PASS Hologram preserves cursor lending during jobs and leaves the task panel usable when the cursor returns
+PASS Hologram survives LoadPreferences and restores its check, disabled ride and click-through
+PASS Hologram off restores clicks, dragging and riding; switching it on cancels an existing drag or ride
+PASS she stays clickable over full screen unless Hologram is on
+PASS hologram words route both ways locally, brain tools offer on/off, and ordinary chat stays chat
+PASS hologram on and off run through Hear with and without a configured brain, without asking that brain
+PASS end task: an unnamed task ends her current job or asks which app; named Chrome and Discord close, loose program and title matches never reach Windows components, guessed exact names stay unmatched, and exact process names, .exe names, Task Manager and File Explorer still work
+PASS input recovery releases only her recorded keys and mouse buttons, keeps extended-key flags, and leaves an empty ledger alone
+LIMIT forced termination, including killing the whole process tree, and driver crashes need an isolated desktop; no real keys, buttons or processes are stopped by this check
+PASS Always on top starts on, missing older settings stay on, and an explicit off or on survives a save and reload
+PASS teleports weight ledges by usable width, and with something full screen she lands beside it, clear of the crosshair and the health bars, on primary, negative and secondary monitors
+PASS comment reading time grows with the whole line and follows Quick, Normal and Long without a ceiling for long comments
+PASS comments, including scrolling screen and game remarks, leave after reading and speech without a click; ordinary scrolling answers keep their reading controls
+PASS opening apps: packaged windows match their titles, an existing window comes forward, a denied switch names the app still in front, and a slow launch stops looking before its window arrives
+LIMIT opening apps: foreground attachment, minimized windows and real launch timing need an interactive Windows desktop; these windows and launches are stand-ins
+PASS browser choice: all seven browsers keep their exe, link and foreground target, Direct and Heard keep named browsers before and after requests, search terms stay intact, missing browsers fall back explicitly, and chat and job schemas and cursor jobs keep the argument
+LIMIT browser choice: real Windows registrations and each browser's tab handoff need an installed browser; these launch checks use stand-ins
+PASS the voice check after her voice lands waits for what she's answering, so it can't cancel what they asked
+PASS a voiced yelp shows its words within a second while a slow voice loads, and her voice follows once it's ready
+PASS a voice setting and its preview leave a fake line playing to the end, then apply and preview the next line
+PASS check-ins and prepared comments wait in order, leave the current line alone, and talking over her still stops her at once
+PASS pitch, speed, robot, glitch and layers keep the live line's style, then reach the next streamed line
+PASS reactions and clone lines wait for sound still playing past its estimate
+PASS reactions wait for pending answer audio during a job after its text appears
+PASS queued voice and server choices keep their settings after a newer OFF without speaking, and a later voice choice can turn her voice back on
+PASS settings keep their order when speech ends before the waiting settings are applied
+PASS voice, brain and call changes and full-screen hiding wait for her line, and turning her voice off stops both speakers at once, drops her waiting lines and keeps the waiting settings
+PASS a game that runs as admin, like Genshin Impact, gets one line on why her keys don't work there; Task Manager, the same game again and a game that doesn't run above her get nothing
+LIMIT whether Windows hides Genshin Impact's keys from her, and whether its token says it runs as admin, needs a real PC with the game
+PASS talking over her before text appears keeps its fallback and rejects the late WAV
+PASS talking over her after text appears keeps that text and rejects the late WAV
+PASS talking over her drops both waiting packets and speech already held by the cable resampler
+PASS replacing an answer on the same asking ticket rejects its old fallback, WAV and failure without clearing the new voice bookkeeping
+PASS a text-only replacement owns the same asking ticket and ignores the older voice completion
+PASS queued local chat and wake mic talk-over events leave a replacement answer on the same asking ticket speaking
+PASS a stale voice chat talk-over leaves the next stream playing with its echo gate closed
+PASS a job line changes its own voice generation and waits for the answer being voiced beside it, which still completes and speaks first
+PASS server interruption rejects pending audio, the next valid reply speaks, and jobs, asking, computer interruption and call generation stay intact
+PASS voice interruption logs name the source with generations and playback timing without reply text or keys
+PASS Stop, voice off and ending call mode drop queued WAV and streamed voice, including a finished answer's tail whose ticket is no longer current
+LIMIT ticket 35 guards a confirmed delivery race; the recorded two-word cutoff and live mic echo still need device reproduction, and in-flight paid requests are not cancelled
+PASS Russian uses matching CUSTOM LOCAL metadata, a voice kept aside, or an imported ru_RU package before Windows; the picked row stays the same
+PASS Russian falls back to a matching Windows culture after a missing, wrong-language or failed custom model, tries another Windows voice after a failure, and never uses the English default
+PASS without a matching voice, replies keep their bubble and stay silent; one Russian CUSTOM LOCAL setup note appears per run, including across language changes
+PASS other scripts use their selected language, including shared scripts and Japanese kanji; mixed and unfamiliar scripts stay quiet, all offered languages have a setup note, and native English synthesis rejects Cyrillic
+PASS English, French and Spanish keep their existing free voice even with Russian selected; cloud speech stays picked, and its out-of-credits fallback also protects Cyrillic
+PASS custom discovery skips incomplete imports, broken metadata, stale paths and duplicates; another matching custom voice survives a failure, English keeps its selected custom voice, and an unavailable Windows catalog stays silent
+PASS Memory vault: her notes move into a vault and come back with what she learned there, a note already in it keeps its lines, and only real vaults are listed
+PASS finished speech uses Speaker and WASAPI at 16, 22.05, 24, 44.1 and 48 kHz, requests PCM and rate conversion, applies her volume once, fills before starting, survives Clear followed by another line, and reopens after a lost stream or a stopped voice
+PASS WASAPI logs failed writes, starts, stops, resets and padding calls with their HRESULT and sample counts; a buffer that never drains fails visibly, and session mute and zero volume are diagnosed without changing them
+PASS Fish Audio WAV replies are decoded and resampled from 48 kHz to 24 kHz, and unreadable audio is described by its format and size without logging its contents
+PASS picked speakers open from the shared list without new reads, including rate changes; swapping the reader takes effect on the next open
+PASS her speaker keeps its output menus, saved ids, rename and reorder, voice and effects routing and Windows default roles; missing choices stay saved and marked, use the default with one notice per loss, and return on their own, including a fresh read after a failed open
+PASS WATCH keeps its screen list, saved ids, capture bounds, foreground and layout handling; missing monitors stay saved and marked, use all screens with one notice per loss, clear stale glances and return on their own, including after startup
+PASS a missing speaker is told under VOICE and a missing monitor in the Screens hint, never under BRAIN, and each clears once it's back or another is picked
+PASS Her speaker and WATCH's Screens row fit with no overlaps at 100%, 150% and 200% DPI, in Simple and Advanced Settings, with a long speaker name kept in its row
+PASS device checks restore the Mainframe window, page and size
+PASS her speaker menu opens at once on a speaker that's slow to answer and says Still checking your speakers..., her window keeps going, her voice takes the speakers she knows, the Mic line still moves meanwhile, asking again while she's looking makes one more look instead of one each, and the menu fills in once the speaker answers
+PASS VOICE's Mic menu opens at once on a mic that's slow to answer and says Still checking your mics..., her window keeps going, Her speaker's line still moves meanwhile, and the menu fills in once the mic answers
+PASS her voice in your mic's window opens at once with a mic that's slow to answer: who hears it and its Output show straight away while only its Input line waits, and its every-second check of who hears her runs in the background, so a slow answer never holds the window up
+PASS her voice in your mic's Output and Input menus open at once on virtual mics and mics that are slow to answer, say Still checking your virtual mics... and Still checking your mics..., and fill in once they answer
+PASS ducking: fake capture and playback sessions request TRUE before starting and keep moving audio after a failed HRESULT, a thrown opt-out or unavailable session service; wave sessions ask on the selected mic and default output, and a missing manager or session is ignored
