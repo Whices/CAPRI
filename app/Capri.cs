@@ -3145,6 +3145,13 @@ namespace CapriDesktop
         private void CheckForUpdates(bool asked)
         {
             if (updating || installing) return;
+            // Capri Lite: this custom build must never replace itself with the official release, which has no click counter.
+            if (!testing)
+            {
+                const string off = "Updates are off in this custom build.";
+                if (mainframe.UpdateStatus != off) mainframe.UpdateNote(off, false);
+                return;
+            }
             updateStarted = true;
             string package = updater.Package();
             preferences.UpdateCheckedAt = DateTime.UtcNow.Ticks;
