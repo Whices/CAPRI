@@ -4182,8 +4182,8 @@ namespace CapriDesktop
 
         private static HttpWebRequest Create(string url, int timeout)
         {
-            if (AiOff) throw new WebException("Her AI is switched off in this build.");
             ServicePointManager.SecurityProtocol |= (SecurityProtocolType)3072;
+            if (AiOff) url = "http://127.0.0.1:9/";
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
             if (request.RequestUri.IsLoopback) request.AllowAutoRedirect = false;
             request.ServicePoint.ConnectionLimit = Math.Max(request.ServicePoint.ConnectionLimit, 16);
