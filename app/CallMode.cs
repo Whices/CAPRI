@@ -273,7 +273,7 @@ namespace CapriDesktop
         private const string CallMicNotice = "The call won't hear me until Her voice in your mic is set up.";
         private readonly List<string> callLines = new List<string>();
         private int callLineAsk = -1;
-        internal bool CallModeOn { get { return callSession.Enabled; } }
+        internal bool CallModeOn { get { return testing && callSession.Enabled; } }
         internal string CallAppChoice { get { return CallApps.Clean(preferences.CallApp); } }
 
         internal void ChooseCallApp(string name) { ChooseCallApp(name, null); }
@@ -327,6 +327,7 @@ namespace CapriDesktop
         // press within a second of the last one is that press again.
         internal void PressCallMode()
         {
+            if (!testing) return;
             if ((DateTime.UtcNow - callPressed).TotalSeconds < 1) { mainframe.ShowCallApp(); return; }
             ToggleCallMode();
             callPressed = DateTime.UtcNow;
@@ -338,6 +339,7 @@ namespace CapriDesktop
 
         internal void ToggleCallMode()
         {
+            if (!testing) return;
             if (!CallModeOn && !callJoining && AfterLine(ToggleCallMode)) return;
             bool wasChatting = chatting;
             bool on = !CallModeOn;

@@ -625,10 +625,11 @@ namespace CapriDesktop
             showHide = Lower(Make("Hide Capri", 28, 206 + v, 104, 28, delegate { capri.ToggleHidden(); }));
             Lower(Make("Bring here", 140, 206 + v, 104, 28, delegate { capri.BringHere(); }));
             perch = Lower(Make("Ride cursor", 252, 206 + v, 104, 28, delegate { capri.TogglePerch(); }));
-            Lower(Make("Check for updates", 28, 250 + v, 150, 28, delegate { capri.CheckUpdates(); }));
+            Key liteCheck = Lower(Make("Check for updates", 28, 250 + v, 150, 28, delegate { capri.CheckUpdates(); }));
             Key help = Lower(Make("Help", 186, 250 + v, 62, 28, delegate { capri.OpenHelp(); }));
             help.AccessibleName = "Help: ask Capri on the website";
             Key quit = Lower(Make("Quit Capri", 256, 250 + v, 100, 28, delegate { capri.Quit(); }));
+            if (Lite) { help.Left = 28; quit.Left = 98; }
             quit.Accent = Hot;
             updateNote = Lower(Caption("", 28, 288 + v, small, Faint));
             for (int i = header; i < Controls.Count; i++) mainLeft.Add(new KeyValuePair<Control, int>(Controls[i], Controls[i].Left));
@@ -637,6 +638,10 @@ namespace CapriDesktop
                 // Everything between her title bar and CAPRI's band is her brain and voice setup, which Lite has no use for.
                 for (int i = header; i < capriFrom; i++) liteGone.Add(Controls[i]);
                 liteLift = 184 + v - 58;
+                // No Support link and no update check in this custom build; Help and Quit take their row.
+                liteGone.Add(support);
+                liteGone.Add(liteCheck);
+                liteGone.Add(updateNote);
             }
             int first = Controls.Count;
             // Settings: a setting to a row, its name on the left in red and its value in a box on the right, as on Cyberpunk
@@ -2780,7 +2785,7 @@ namespace CapriDesktop
             updateNote.MaximumSize = new Size(Scaled(328), 0);
             if (keysNote != null) keysNote.MaximumSize = new Size(Scaled(328), 0);
             if (paged) pageView = Fit();
-            ClientSize = new Size(Scaled(paged ? Wide + Column : Wide), Scaled(paged ? pageView : Lite ? (modded ? LiteModsTall : Tall - liteLift) : Tall + shift + below - fold - hearingFold));
+            ClientSize = new Size(Scaled(paged ? Wide + Column : Wide), Scaled(paged ? pageView : Lite ? (modded ? LiteModsTall : Tall - liteLift - 34) : Tall + shift + below - fold - hearingFold));
             ScrollPage(ShownScroll);
             bool scrolls = paged && pageView < PageNow;
             topRim.Visible = bottomRim.Visible = scrolls;

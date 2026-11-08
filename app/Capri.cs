@@ -2509,7 +2509,7 @@ namespace CapriDesktop
             if (Packaged.Is) helpItem.DropDownItems.Add(new ToolStripMenuItem("Report a problem", null, delegate { OpenPage(IssuesPage); }));
             if (Packaged.Is) helpItem.DropDownItems.Add(new ToolStripMenuItem("Mod rules", null, delegate { OpenPage(ModRulesPage); }));
             checkItem = new ToolStripMenuItem("Check for updates", null, delegate { CheckForUpdates(true); });
-            helpItem.DropDownItems.Add(checkItem);
+            if (testing) helpItem.DropDownItems.Add(checkItem);
             updateItem = new ToolStripMenuItem("Restart to update", null, delegate { InstallUpdate(); });
             menu.Items.Add(helpItem);
             foreach (ToolStripMenuItem parent in new[] { sizes, moves, helpItem })
@@ -2666,10 +2666,10 @@ namespace CapriDesktop
             getWakePack = FetchWake;
             box.Dismissed += delegate { if (box.Leaving < 0) box.Leaving = clock.Elapsed.TotalSeconds; };
             typer.Submitted += Hear;
-            callSession.Change(preferences.CallMode);
+            callSession.Change(preferences.CallMode && testing);
             mainframe.ShowCallApp();
             if (micMix != null) micMix.Call = CallModeOn;
-            if (preferences.CallMode) ResetCall();
+            if (preferences.CallMode && testing) ResetCall();
             PcEars.CanListen = delegate { return !CallModeOn || CallHands(asking); };
             PcEars.Generation = delegate { return callSession.Generation; };
             typer.CallMode = CallModeOn;
@@ -11445,6 +11445,7 @@ namespace CapriDesktop
         // "Hey Capri": she glitches in if she's hidden, opens voice chat the way her talk key does and says she's there.
         private void HeardHeyCapri()
         {
+            if (!testing) return;
             if (testing && !wakeChecks) return;
             wakeHeard++;
             if (!preferences.HeyCapri || !wakeOpen || WakePaused || quitting || IsDisposed) return;
@@ -12235,6 +12236,8 @@ namespace CapriDesktop
         private void UpdatePill(double now)
         {
             if (!IsHandleCreated) return;
+            // Capri Lite: no AI chat or calls in this build.
+            if (!testing) { if (pill.Visible) pill.Hide(); return; }
             bool allowed = !hidden && !riding && !onPanel && !dragging && !pressed && !falling;
             Point cursor = Cursor.Position;
             Point inside = PointToClient(cursor);
@@ -12251,6 +12254,7 @@ namespace CapriDesktop
 
         private void OpenTyper()
         {
+            if (!testing) return;
             followUp.Drop();
             StopExplore();
             if (typer.Visible) { typer.Hide(); return; }
@@ -12263,6 +12267,7 @@ namespace CapriDesktop
 
         private void ToggleChat()
         {
+            if (!testing) return;
             if (chatting) { earsClosed = preferences.ListenCapri; Brain.Log("ears", -1, "Shut by her wave, its key or her voice_chat tool."); StopChat(); return; }
             earsClosed = false;
             WakeRest(true);
@@ -12299,6 +12304,7 @@ namespace CapriDesktop
 
         private void StartLocal(bool credits = false)
         {
+            if (!testing) return;
             StopMicTest(false);
             hearingSaid = null;
             hearingCaptureProblem = hearingSpeechProblem = null;
@@ -13610,6 +13616,7 @@ namespace CapriDesktop
 
         private void Hear(string text, string shown, string prompt, int switches = 0, bool callInput = false, string callHeard = null)
         {
+            if (!testing) return;
             text = (text ?? "").Trim();
             if (text.Length == 0) return;
             Func<int, string> callReply = prompt == "> you: " ? FriendAnswer(text) : null;
