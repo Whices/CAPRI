@@ -29,6 +29,18 @@ namespace CapriDesktop
         private static string lastCrash;
         private static int lastCrashAt;
 
+        // True in Capri Lite: her own web pages don't open and only the sites below can be reached.
+        internal static bool OffGrid;
+
+        private static readonly string[] AllowedSites = { "youtube.com", "youtu.be", "spotify.com", "wikipedia.org", "google.com", "duckduckgo.com", "reddit.com", "twitch.tv", "roblox.com" };
+
+        private static bool AllowedSite(string host)
+        {
+            host = (host ?? "").ToLowerInvariant();
+            foreach (string site in AllowedSites) if (host == site || host.EndsWith("." + site, StringComparison.Ordinal)) return true;
+            return false;
+        }
+
         [STAThread]
         private static int Main(string[] args)
         {
@@ -39,6 +51,19 @@ namespace CapriDesktop
             Application.SetCompatibleTextRenderingDefault(false);
             bool smoke = args.Length >= 2 && args[0] == "--smoke-test";
             if (smoke && !SmokeRun.Worker) return SmokeRun.Run(args);
+            // Capri Lite: only the sites she opens for you can be reached (YouTube, Spotify, Wikipedia, Google, DuckDuckGo, Reddit,
+            // Twitch, Roblox). Any other secure connection (mods, updates, AI, voices, downloads) fails its handshake and acts as
+            // if offline, and her own web pages (Help, Discord...) never open. Plain local connections still work, like Ollama on
+            // 127.0.0.1. Normal certificate checks still apply to the allowed sites.
+            if (!smoke && !(args.Length > 0 && args[0] == "--bench"))
+            {
+                OffGrid = true;
+                ServicePointManager.ServerCertificateValidationCallback = delegate(object sender, System.Security.Cryptography.X509Certificates.X509Certificate certificate, System.Security.Cryptography.X509Certificates.X509Chain chain, System.Net.Security.SslPolicyErrors errors)
+                {
+                    HttpWebRequest asking = sender as HttpWebRequest;
+                    return asking != null && errors == System.Net.Security.SslPolicyErrors.None && AllowedSite(asking.RequestUri.Host);
+                };
+            }
             SmokeOptions smokeOptions = smoke ? SmokeOptions.Parse(args) : null;
             bool bench = args.Length == 2 && args[0] == "--bench";
             if (args.Length == 1 && args[0] == "--stream") Computer.Streaming = Computer.StreamingAlways = true;
@@ -3339,6 +3364,7 @@ namespace CapriDesktop
 
         private static void OpenPage(string page)
         {
+            if (Program.OffGrid) return;
             if (page != OllamaPage && page != FreeKeyPage && page != GeminiKeyPage && page != RouterKeyPage && page != GuidePage && page != DiscordPage && page != HelpPage && page != SupportPage && page != CableSetup.Page && page != IssuesPage && page != ModRulesPage) return;
             Browse(page);
         }
