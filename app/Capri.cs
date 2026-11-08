@@ -10443,6 +10443,8 @@ namespace CapriDesktop
 
         internal void SetUpBrain()
         {
+            // Capri Lite: nothing downloads by itself (voice, ears, HD voice, brain).
+            if (!testing) return;
             if (SettingUp || machine == null) return;
             SettingUp = true;
             engine.Cancel = false;
@@ -11087,6 +11089,8 @@ namespace CapriDesktop
 
         internal void SetUpFreeVoice(bool told = false)
         {
+            // Capri Lite: nothing downloads by itself (voice, ears, HD voice, brain).
+            if (!testing) return;
             if (SettingUpVoice) return;
             SettingUpVoice = true;
             kokoro.Cancel = false;
@@ -11153,6 +11157,8 @@ namespace CapriDesktop
         // through Windows speech.
         private void GetFreeEars(bool retry = false)
         {
+            // Capri Lite: nothing downloads by itself (voice, ears, HD voice, brain).
+            if (!testing) return;
             // It downloads alongside her free voice; they work once both are in.
             if (testing || HearingChoice == 2 || settingUpEars || !FreeChatOn || parakeet.Installed || !parakeet.Fits) return;
             settingUpEars = true;
@@ -11288,6 +11294,8 @@ namespace CapriDesktop
 
         private void GetFreeVoice()
         {
+            // Capri Lite: nothing downloads by itself (voice, ears, HD voice, brain).
+            if (!testing) return;
             if (testing || SettingUpVoice || kokoro.Installed || preferences.Silent) return;
             balloonPage = null;
             balloonUpdate = false;
@@ -11544,6 +11552,8 @@ namespace CapriDesktop
 
         private void SetUpHd()
         {
+            // Capri Lite: nothing downloads by itself (voice, ears, HD voice, brain).
+            if (!testing) return;
             if (settingUpHd) return;
             settingUpHd = true;
             qwen.Cancel = false;

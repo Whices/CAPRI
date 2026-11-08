@@ -1799,8 +1799,22 @@ namespace CapriDesktop
 
         // Works out Lite's folded bands from where each row was built. A band is [first row's top, the top of the next row
         // that stays), so what's under it moves up by exactly the rows that went, and the gaps stay the width they were.
+        private Head liteWatchHead, liteHabitsHead;
+
         private void BuildLite(Head watchHead, Head habitsHead, params Control[] retired)
         {
+            liteWatchHead = watchHead;
+            liteHabitsHead = habitsHead;
+            foreach (Control control in new Control[] { notesKey, personalityKey, layersKey, styleNote, memoriesKey }) liteRetired.Add(control);
+            foreach (Control control in retired) liteRetired.Add(control);
+            LiteBands();
+        }
+
+        // Works the bands out again from where the rows are now, so a mod that adds a row to Settings (like Music Light under
+        // Hologram) moves them along with everything else. It runs at the start and every time the gaps are closed.
+        private void LiteBands()
+        {
+            Head watchHead = liteWatchHead, habitsHead = liteHabitsHead;
             const int Tail = 1000000;
             try
             {
@@ -1844,8 +1858,6 @@ namespace CapriDesktop
                 liteTall = SimpleTall;
                 return;
             }
-            foreach (Control control in new Control[] { notesKey, personalityKey, layersKey, styleNote, memoriesKey }) liteRetired.Add(control);
-            foreach (Control control in retired) liteRetired.Add(control);
             int bottom = 0;
             foreach (KeyValuePair<Control, int> entry in pageLeft)
             {
@@ -1877,6 +1889,7 @@ namespace CapriDesktop
         // Moves what's left up over the rows Settings hides while it's simple, or back where it was built.
         private void CloseGaps()
         {
+            if (Lite && liteWatchHead != null) LiteBands();
             foreach (KeyValuePair<Control, int> entry in pageLeft)
             {
                 int top;
